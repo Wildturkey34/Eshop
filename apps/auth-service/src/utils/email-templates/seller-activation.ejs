@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Eshop Seller - Verify Your Business Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 0;
+        min-width: 100%;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+        color: #333333;
+      }
+
+      a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0 0 20px 0;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 16px 0;
+        color: #1f2937;
+      }
+
+      p {
+        margin: 0 0 20px 0;
+        color: #4b5563;
+      }
+
+      table,
+      td {
+        vertical-align: top;
+      }
+
+      /* Layout */
+      .email-container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .email-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow:
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+
+      .email-header {
+        background: linear-gradient(135deg, #1e40af 0%, #4338ca 100%);
+        padding: 40px 32px;
+        text-align: center;
+        position: relative;
+      }
+
+      .email-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,0 1000,100 0,100"/><circle cx="100" cy="20" r="3"/><circle cx="200" cy="80" r="2"/><circle cx="300" cy="40" r="2"/><circle cx="600" cy="30" r="3"/><circle cx="800" cy="70" r="2"/><circle cx="900" cy="25" r="2"/></svg>')
+          repeat-x;
+      }
+
+      .logo {
+        position: relative;
+        z-index: 1;
+      }
+
+      .seller-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 8px;
+      }
+
+      .email-body {
+        padding: 48px 32px;
+        background: #ffffff;
+      }
+
+      .greeting {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .welcome-message {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        border-left: 4px solid #2563eb;
+        padding: 20px 24px;
+        border-radius: 0 8px 8px 0;
+        margin: 24px 0;
+      }
+
+      .welcome-message p {
+        margin: 0;
+        color: #1e40af;
+        font-weight: 500;
+      }
+
+      .otp-container {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border: 2px dashed #d1d5db;
+        border-radius: 12px;
+        padding: 32px;
+        text-align: center;
+        margin: 32px 0;
+      }
+
+      .otp-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6b7280;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .otp-code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 32px;
+        font-weight: 700;
+        color: #1e40af;
+        letter-spacing: 8px;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .security-notice {
+        background: #fef3c7;
+        border-left: 4px solid #f59e0b;
+        padding: 16px 20px;
+        border-radius: 0 8px 8px 0;
+        margin: 32px 0;
+      }
+
+      .security-notice p {
+        margin: 0;
+        color: #92400e;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .timer-info {
+        background: #dbeafe;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        margin: 24px 0;
+      }
+
+      .timer-info p {
+        margin: 0;
+        color: #1e40af;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .benefits-list {
+        background: #f9fafb;
+        border-radius: 8px;
+        padding: 24px;
+        margin: 24px 0;
+      }
+
+      .benefits-list h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 16px 0;
+      }
+
+      .benefits-list ul {
+        margin: 0;
+        padding: 0 0 0 20px;
+        list-style: none;
+      }
+
+      .benefits-list li {
+        color: #4b5563;
+        margin-bottom: 8px;
+        position: relative;
+        padding-left: 8px;
+      }
+
+      .benefits-list li:before {
+        content: "✓";
+        color: #10b981;
+        font-weight: bold;
+        position: absolute;
+        left: -16px;
+      }
+
+      .email-footer {
+        padding: 32px;
+        background: #f9fafb;
+        text-align: center;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 16px;
+      }
+
+      .support-info {
+        font-size: 13px;
+        color: #9ca3af;
+        margin: 0;
+      }
+
+      /* Responsive */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          padding: 20px 16px;
+        }
+
+        .email-header {
+          padding: 32px 24px;
+        }
+
+        .email-body {
+          padding: 32px 24px;
+        }
+
+        .otp-code {
+          font-size: 28px;
+          letter-spacing: 4px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .email-wrapper {
+          background: #1f2937;
+          color: #f3f4f6;
+        }
+
+        .email-body {
+          background: #1f2937;
+        }
+
+        .greeting {
+          color: #f3f4f6;
+        }
+
+        p {
+          color: #d1d5db;
+        }
+
+        .email-footer {
+          background: #111827;
+          border-top: 1px solid #374151;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="email-wrapper">
+        <div class="email-header">
+          <div class="logo">
+            <h1>🏪 Eshop</h1>
+            <div class="seller-badge">Seller Portal</div>
+          </div>
+        </div>
+
+        <div class="email-body">
+          <div class="greeting">Hello <%= name %>,</div>
+
+          <div class="welcome-message">
+            <p>
+              🎉 Welcome to Eshop Seller Platform! You're one step away from
+              reaching thousands of customers.
+            </p>
+          </div>
+
+          <p>
+            Thank you for choosing Eshop as your e-commerce partner. We're
+            excited to help you grow your business and expand your reach.
+          </p>
+
+          <h2>Verify Your Seller Account</h2>
+          <p>
+            To activate your seller account and start listing your products,
+            please verify your email using the code below:
+          </p>
+
+          <div class="otp-container">
+            <div class="otp-label">Your Verification Code</div>
+            <div class="otp-code"><%= otp %></div>
+          </div>
+
+          <div class="timer-info">
+            <p>⏰ This code will expire in 5 minutes for security purposes</p>
+          </div>
+
+          <p>
+            Enter this code on the verification page to complete your seller
+            registration and access your dashboard.
+          </p>
+
+          <div class="benefits-list">
+            <h3>What's Next After Verification?</h3>
+            <ul>
+              <li>Set up your shop profile and showcase your brand</li>
+              <li>List unlimited products with detailed descriptions</li>
+              <li>Access powerful analytics and sales tracking tools</li>
+              <li>Connect with thousands of active shoppers</li>
+              <li>Receive secure payments through our platform</li>
+            </ul>
+          </div>
+
+          <div class="security-notice">
+            <p>
+              🔒 <strong>Security Notice:</strong> Keep this code confidential.
+              Eshop staff will never request your verification code via phone,
+              email, or any other channel.
+            </p>
+          </div>
+
+          <p>
+            If you didn't register for a seller account on Eshop, please
+            disregard this email. Your information remains secure.
+          </p>
+        </div>
+
+        <div class="email-footer">
+          <p class="footer-text">
+            Questions about selling on Eshop?<br />
+            Our seller support team is ready to help at
+            <a href="mailto:eshops047@gmail.com">eshops047@gmail.com</a>
+          </p>
+          <p class="support-info">
+            This is an automated message from Eshop Seller Support<br />
+            © 2024 Eshop. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
