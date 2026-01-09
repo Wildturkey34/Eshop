@@ -1,6 +1,7 @@
 'use client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import GoogleButton from 'apps/user-ui/src/shared/components/google-button';
+import { useAuthStore } from 'apps/user-ui/src/store/authStore';
 import axios, { AxiosError } from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
@@ -18,6 +19,8 @@ const Login = () => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { setLoggedIn } = useAuthStore();
 
   const {
     register,
@@ -36,12 +39,14 @@ const Login = () => {
     },
     onSuccess: (data) => {
       setServerError(null);
+      setLoggedIn(true); // Update auth store
+      queryClient.invalidateQueries({ queryKey: ['user'] }); // Refetch user data
       router.push('/');
     },
     onError: (error: AxiosError) => {
       const errorMessage =
         (error.response?.data as { message?: string })?.message ||
-        'Invalid credintials!';
+        'Invalid credentials!';
       setServerError(errorMessage);
     },
   });

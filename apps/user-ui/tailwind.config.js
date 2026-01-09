@@ -13,6 +13,7 @@ module.exports = {
       fontFamily: {
         Roboto: ['var(--font-roboto)'],
         Poppins: ['var(--font-poppins)'],
+        jost: ['var(--font-jost)'],
       },
     },
   },

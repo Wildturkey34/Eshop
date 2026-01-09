@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../../packages/middleware"
+    },
+    {
+      "path": "../../packages/libs/email"
+    },
+    {
+      "path": "../../packages/libs/redis"
+    },
+    {
+      "path": "../../packages/error-handler"
+    },
+    {
+      "path": "../../packages/libs/prisma"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}

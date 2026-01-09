@@ -8,9 +8,12 @@ const axiosInstance = axios.create({
 let isRefreshing = false;
 let refreshSubscribers: (() => void)[] = [];
 
-// Handle logout and prevent infinte loops
+// Handle logout and prevent infinite loops
 const handleLogout = () => {
   if (window.location.pathname !== '/login') {
+    // Clear any tokens
+    document.cookie = 'access_token=; Max-Age=0; path=/;';
+    document.cookie = 'seller-refresh-token=; Max-Age=0; path=/;';
     window.location.href = '/login';
   }
 };
@@ -32,13 +35,13 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-//Handle expired tokens and expired logic
+//Handle expired tokens and refresh logic
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    //prevent infinte retry loop
+    //prevent infinite retry loop
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve) => {
@@ -48,21 +51,24 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
       try {
-        await axios.post(
+        console.log('Token expired, refreshing...');
+        const refreshResponse = await axios.post(
           `${process.env.NEXT_PUBLIC_SERVER_URI}/api/refresh-token`,
           {},
           { withCredentials: true }
         );
 
+        console.log('Token refreshed successfully');
         isRefreshing = false;
         onRefreshSuccess();
 
         return axiosInstance(originalRequest);
-      } catch (error) {
+      } catch (refreshError) {
+        console.error('Token refresh failed:', refreshError);
         isRefreshing = false;
         refreshSubscribers = [];
         handleLogout();
-        return Promise.reject(error);
+        return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);

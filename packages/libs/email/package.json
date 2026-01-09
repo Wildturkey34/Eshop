@@ -1,0 +1,13 @@
+{
+  "name": "@packages/libs/email",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "dependencies": {
+    "nodemailer": "^6.9.16",
+    "ejs": "^3.1.10"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.16",
+    "@types/ejs": "^3.1.5"
+  }
+}

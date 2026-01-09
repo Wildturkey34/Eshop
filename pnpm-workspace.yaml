@@ -1,2 +1,6 @@
 packages:
- - 'apps/*'
+  - 'apps/*'
+  - 'order-service'
+  - 'apps'
+  - 'packages/*'
+  - 'packages/libs/*'

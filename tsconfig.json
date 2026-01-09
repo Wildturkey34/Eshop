@@ -17,6 +17,48 @@
     },
     {
       "path": "./apps/seller-ui"
+    },
+    {
+      "path": "./apps/product-service"
+    },
+    {
+      "path": "./apps/kafka-service"
+    },
+    {
+      "path": "./apps/order-service"
+    },
+    {
+      "path": "./packages/libs/prisma"
+    },
+    {
+      "path": "./packages/error-handler"
+    },
+    {
+      "path": "./packages/libs/imagekit"
+    },
+    {
+      "path": "./packages/libs/redis"
+    },
+    {
+      "path": "./packages/middleware"
+    },
+    {
+      "path": "./apps/seller-service"
+    },
+    {
+      "path": "./packages/libs/email"
+    },
+    {
+      "path": "./apps/admin-service"
+    },
+    {
+      "path": "./apps/admin-ui"
+    },
+    {
+      "path": "./apps/chatting-service"
+    },
+    {
+      "path": "./apps/recommendation-service"
     }
   ]
 }

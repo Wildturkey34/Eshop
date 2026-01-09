@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "nodenext",
+    "types": ["node", "express"],
+    "rootDir": "../../",
+    "moduleResolution": "nodenext",
+    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts", "../../packages/**/*.ts"],
+  "exclude": [],
+  "references": [
+    {
+      "path": "../../packages/middleware"
+    },
+    {
+      "path": "../../packages/libs/email"
+    },
+    {
+      "path": "../../packages/libs/redis"
+    },
+    {
+      "path": "../../packages/error-handler"
+    },
+    {
+      "path": "../../packages/libs/prisma"
+    }
+  ]
+}

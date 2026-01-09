@@ -8,25 +8,34 @@ datasource db {
 }
 
 model images {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  file_id String
-  url     String
-  userId  String? @unique @db.ObjectId
-  shopId  String? @unique @db.ObjectId
-  users   users?  @relation(fields: [userId], references: [id])
-  shops   shops?  @relation(fields: [shopId], references: [id])
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  file_id    String
+  url        String
+  userId     String?   @db.ObjectId
+  shopId     String?   @db.ObjectId
+  productsId String?   @db.ObjectId
+  users      users?    @relation(fields: [userId], references: [id])
+  shops      shops?    @relation(fields: [shopId], references: [id])
+  products   products? @relation(fields: [productsId], references: [id])
+
+  @@index([userId])
+  @@index([shopId])
+  @@index([productsId])
 }
 
 model users {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   email       String        @unique
+  role        String        @default("user")
   password    String?
-  following   String[]
-  avatar      images?
+  avatar      images[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   shopReviews shopReviews[]
+  orders      orders[]
+  followings  followers[]
+  addresses   address[]
 }
 
 model shopReviews {
@@ -39,6 +48,23 @@ model shopReviews {
   updatedAt DateTime @updatedAt
   shopsId   String?  @db.ObjectId
   shops     shops?   @relation(fields: [shopsId], references: [id])
+
+  @@index([userId])
+  @@index([shopsId])
+  @@index([rating])
+}
+
+model followers {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  shopsId   String   @db.ObjectId
+  user      users    @relation(fields: [userId], references: [id])
+  shops     shops    @relation(fields: [shopsId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, shopsId])
+  @@index([userId])
+  @@index([shopsId])
 }
 
 model shops {
@@ -46,7 +72,7 @@ model shops {
   name          String
   bio           String?
   category      String
-  avatar        images?
+  avatar        images[]
   coverBanner   String?
   address       String
   opening_hours String?
@@ -54,23 +80,295 @@ model shops {
   socialLinks   Json[]
   ratings       Float         @default(0)
   reviews       shopReviews[]
+  followers     followers[]
+  followerCount Int           @default(0)
   sellerId      String        @unique @db.ObjectId
   sellers       sellers       @relation(fields: [sellerId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
+  isDeleted     Boolean       @default(false)
+  deletedAt     DateTime?
+  ImagesId      String?       @db.ObjectId
+  products      products[]
+  orders        orders[]
+
+  @@index([category])
+  @@index([ratings])
 }
 
 model sellers {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  email        String   @unique
-  phone_number String
-  country      String
-  password     String
-  stripeId     String?
-  shop         shops?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                     String           @id @default(auto()) @map("_id") @db.ObjectId
+  name                   String
+  email                  String           @unique
+  phone_number           String
+  country                String
+  password               String
+  stripeId               String?
+  shop                   shops?
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  isDeleted              Boolean          @default(false)
+  deletedAt              DateTime?
+  discount_codes         discount_codes[]
+  // Seller Preferences
+  lowStockThreshold      Int              @default(10)
+  notificationPreference String           @default("all") // "email", "web", "app", "all"
+  emailNotifications     Boolean          @default(true)
 }
 
-//model products
+model site_config {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  categories    String[]
+  subCategories Json
+  logo          String?
+  banner        String?
+}
+
+model discount_codes {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  public_name   String
+  discountType  String
+  discountValue Float
+  discountCode  String   @unique
+  sellerId      String   @db.ObjectId
+  seller        sellers  @relation(fields: [sellerId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([sellerId])
+}
+
+enum productStatus {
+  Active
+  Pending
+  Draft
+}
+
+model products {
+  id                    String        @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  slug                  String        @unique
+  category              String
+  subCategory           String
+  short_description     String
+  detailed_description  String
+  images                images[]
+  video_url             String?
+  tags                  String[]
+  brand                 String?
+  colors                String[]
+  sizes                 String[]
+  starting_date         DateTime?
+  ending_date           DateTime?
+  stock                 Int
+  sale_price            Float
+  regular_price         Float
+  ratings               Float         @default(5)
+  warranty              String?
+  custom_specifications Json?
+  custom_properties     Json
+  isDeleted             Boolean?      @default(false)
+  cashOnDelivery        String?
+  discount_codes        String[]      @db.ObjectId
+  status                productStatus @default(Active)
+  total_sales           Int           @default(0)
+  deletedAt             DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  shopId                String        @db.ObjectId
+  Shop                  shops         @relation(fields: [shopId], references: [id])
+  // Low stock alert tracking (prevents spam alerts)
+  lastLowStockAlertAt   DateTime?
+
+  @@index([shopId, status])
+  @@index([category, status])
+  @@index([category, subCategory, status])
+  @@index([ratings])
+  @@index([total_sales])
+  @@index([createdAt, status])
+}
+
+model userAnalytics {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @unique
+  country         String?
+  city            String?
+  device          String?
+  lastVisited     DateTime
+  actions         Json?
+  recommendations Json?
+  lastTrained     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([lastVisited])
+}
+
+model productAnalytics {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId    String   @unique
+  shopId       String
+  views        Int      @default(0)
+  cartAdds     Int      @default(0)
+  wishListAdds Int      @default(0)
+  purchases    Int      @default(0)
+  lastViewedAt DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([shopId])
+  @@index([lastViewedAt])
+}
+
+model shopAnalytics {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  shopId        String   @unique @db.ObjectId
+  totalVisitors Int      @default(0)
+  countryStats  Json?
+  cityStats     Json?
+  deviceStats   Json?
+  lastVisitedAt DateTime
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([lastVisitedAt])
+}
+
+model uniqueShopVisitors {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  shopId    String   @db.ObjectId
+  userId    String   @db.ObjectId
+  visitedAt DateTime @default(now())
+
+  @@unique([shopId, userId])
+  @@index([shopId])
+  @@index([userId])
+  @@index([visitedAt])
+}
+
+model orders {
+  id                String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String       @db.ObjectId
+  user              users        @relation(fields: [userId], references: [id])
+  shopId            String       @db.ObjectId
+  shop              shops        @relation(fields: [shopId], references: [id])
+  total             Float
+  shippingAddressId String?
+  couponCode        String?
+  discountAmount    Float?
+  status            String
+  deliveryStatus    String       @default("Ordered")
+  items             orderItems[] @relation("OrderItemsRelation")
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([userId, status])
+  @@index([shopId, deliveryStatus])
+  @@index([status])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([shopId, createdAt])
+}
+
+model orderItems {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId         String   @db.ObjectId
+  productId       String
+  quantity        Int
+  price           Float
+  selectedOptions Json?
+  orders          orders   @relation(fields: [orderId], references: [id], name: "OrderItemsRelation")
+  createdAt       DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum addressType {
+  Home
+  Work
+  Other
+}
+
+model address {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String      @db.ObjectId
+  user      users       @relation(fields: [userId], references: [id])
+  label     addressType
+  name      String
+  street    String
+  city      String
+  zip       String
+  country   String
+  isDefault Boolean     @default(true)
+  createdAt DateTime    @default(now())
+
+  @@index([userId])
+  @@index([isDefault])
+}
+
+model notifications {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  creatorId     String
+  receiverId    String
+  redirect_link String?
+  title         String
+  message       String
+  status        String   @default("Unread")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([receiverId, status])
+  @@index([creatorId])
+  @@index([createdAt])
+}
+
+model conversationGroup {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  isGroup        Boolean       @default(false)
+  name           String?
+  creatorId      String
+  participantIds String[]      @db.ObjectId
+  participants   participant[]
+  messages       message[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([creatorId])
+  @@index([participantIds])
+}
+
+model participant {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  conversationId String            @db.ObjectId
+  conversation   conversationGroup @relation(fields: [conversationId], references: [id])
+  userId         String?           @db.ObjectId
+  sellerId       String?           @db.ObjectId
+  lastSeenAt     DateTime?
+  isOnline       Boolean           @default(false)
+  unreadCount    Int               @default(0)
+  muted          Boolean           @default(false)
+  joinedAt       DateTime          @default(now())
+
+  @@index([conversationId])
+  @@index([userId])
+  @@index([sellerId])
+  @@index([isOnline])
+}
+
+model message {
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
+  conversationId String            @db.ObjectId
+  conversation   conversationGroup @relation(fields: [conversationId], references: [id])
+  senderId       String            @db.ObjectId
+  senderType     String
+  content        String?
+  attachments    String[]
+  status         String            @default("sent")
+  createdAt      DateTime          @default(now())
+
+  @@unique([conversationId, senderId, content, createdAt])
+  @@index([conversationId, createdAt])
+  @@index([senderId])
+  @@index([status])
+}

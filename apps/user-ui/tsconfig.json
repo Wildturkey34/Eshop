@@ -23,7 +23,11 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@packages/*": ["../../packages/*"]
+    }
   },
   "include": [
     "**/*.js",
@@ -32,6 +36,7 @@
     "**/*.tsx",
     "../../apps/user-ui/.next/types/**/*.ts",
     "../../dist/apps/user-ui/.next/types/**/*.ts",
+    "../../packages/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],

@@ -10,10 +10,15 @@ import {
 } from '../utils/auth.helper';
 import bcrypt from 'bcryptjs';
 import prisma from '@packages/libs/prisma';
-import { AuthError, ValidationError } from '@packages/error-handler';
+import {
+  AuthError,
+  NotFoundError,
+  ValidationError,
+} from '@packages/error-handler';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { setCookie } from '../utils/cookies/setCookie';
 import Stripe from 'stripe';
+import { sendLog } from '@packages/utils/logs/send-logs';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-10-29.clover',
@@ -140,6 +145,143 @@ export const loginUser = async (
   }
 };
 
+export const logOutUser = async (req: any, res: Response) => {
+  res.clearCookie('access_token');
+  res.clearCookie('refresh_token');
+
+  res.status(201).json({
+    success: true,
+  });
+};
+
+// update user password
+export const updateUserPassword = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return next(new ValidationError('all fields are required'));
+    }
+
+    if (newPassword !== confirmPassword) {
+      return next(new ValidationError('new passwords do not match'));
+    }
+
+    if (currentPassword === newPassword) {
+      return next(
+        new ValidationError(
+          'New password cannot be the same as the current password'
+        )
+      );
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user || !user.password) {
+      return next(new AuthError('user not found or password not set'));
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isPasswordCorrect) {
+      return next(new AuthError('current password is incorrect'));
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    await prisma.users.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    res.status(200).json({ message: 'password updated successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// login admin
+export const loginAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return next(new ValidationError('Email and password are required!'));
+    }
+
+    const user = await prisma.users.findUnique({ where: { email } });
+
+    if (!user) return next(new AuthError("User doesn't exists!"));
+
+    // verify password
+    const isMatch = await bcrypt.compare(password, user.password!);
+    if (!isMatch) {
+      return next(new AuthError('Invalid email or password'));
+    }
+
+    const isAdmin = user.role === 'admin';
+
+    if (!isAdmin) {
+      sendLog({
+        type: 'error',
+        message: `Admin login failed for ${email} — not an admin`,
+        source: 'auth-service',
+      });
+      return next(new AuthError('Invalid access!'));
+    }
+
+    sendLog({
+      type: 'success',
+      message: `Admin login successful: ${email}`,
+      source: 'auth-service',
+    });
+
+    res.clearCookie('seller-access-token');
+    res.clearCookie('seller-refresh-token');
+
+    // Generate access and refresh token
+    const accessToken = jwt.sign(
+      { id: user.id, role: 'admin' },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      {
+        expiresIn: '15m',
+      }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user.id, role: 'admin' },
+      process.env.REFRESH_TOKEN_SECRET as string,
+      {
+        expiresIn: '7d',
+      }
+    );
+
+    // store the refresh and access token in an httpOnly secure cookie
+    setCookie(res, 'refresh_token', refreshToken);
+    setCookie(res, 'access_token', accessToken);
+
+    res.status(200).json({
+      message: 'Login successful!',
+      user: { id: user.id, email: user.email, name: user.name },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 // refresh token
 export const refreshToken = async (
   req: any,
@@ -153,7 +295,7 @@ export const refreshToken = async (
       req.headers.authorization?.split(' ')[1];
 
     if (!refreshToken) {
-      return new ValidationError('Unauthorized! No refresh token.');
+      return next(new ValidationError('Unauthorized! No refresh token.'));
     }
 
     const decoded = jwt.verify(
@@ -162,7 +304,7 @@ export const refreshToken = async (
     ) as { id: string; role: string };
 
     if (!decoded || !decoded.id || !decoded.role) {
-      return new JsonWebTokenError('Forbidden! Invalid refresh token.');
+      return next(new JsonWebTokenError('Forbidden! Invalid refresh token.'));
     }
 
     let account;
@@ -176,7 +318,7 @@ export const refreshToken = async (
     }
 
     if (!account) {
-      return new AuthError('Forbidden! User/Seller not found');
+      return next(new AuthError('Forbidden! User/Seller not found'));
     }
 
     const newAccessToken = jwt.sign(
@@ -219,6 +361,19 @@ export const verifyUserForgotPassword = async (
 
 // get logged in user info
 export const getUser = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const user = req.user;
+    res.status(201).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get logged in admin info
+export const getAdmin = async (req: any, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
     res.status(201).json({
@@ -480,6 +635,16 @@ export const loginSeller = async (
   }
 };
 
+//logout seller
+export const logOutSeller = async (req: any, res: Response) => {
+  res.clearCookie('seller-access-token');
+  res.clearCookie('seller-refresh-token');
+
+  res.status(201).json({
+    success: true,
+  });
+};
+
 //get logged in seller
 export const getSeller = async (
   req: any,
@@ -492,6 +657,149 @@ export const getSeller = async (
     res.status(201).json({
       success: true,
       seller,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// log out admin
+export const logOutAdmin = async (req: any, res: Response) => {
+  res.clearCookie('access_token');
+  res.clearCookie('refresh_token');
+
+  res.status(201).json({
+    success: true,
+  });
+};
+
+// add new address
+export const addUserAddress = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const { label, name, street, city, zip, country, isDefault } = req.body;
+
+    if (!label || !name || !street || !city || !zip || !country) {
+      return next(new ValidationError('All fields are required'));
+    }
+
+    if (isDefault) {
+      await prisma.address.updateMany({
+        where: {
+          userId,
+          isDefault: true,
+        },
+        data: {
+          isDefault: false,
+        },
+      });
+    }
+
+    const newAddress = await prisma.address.create({
+      data: {
+        userId,
+        label,
+        name,
+        street,
+        city,
+        zip,
+        country,
+        isDefault,
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      address: newAddress,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// delete user address
+export const deleteUserAddress = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const { addressId } = req.params;
+
+    if (!addressId) {
+      return next(new ValidationError('Address ID is required'));
+    }
+
+    const existingAddress = await prisma.address.findFirst({
+      where: {
+        id: addressId,
+        userId,
+      },
+    });
+
+    if (!existingAddress) {
+      return next(new NotFoundError('Address not found or unauthorized'));
+    }
+
+    await prisma.address.delete({
+      where: {
+        id: addressId,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Address deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+// get user addresses
+export const getUserAddresses = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+
+    const addresses = await prisma.address.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      addresses,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get layout data
+export const getLayoutData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Return empty layout data for now
+    // This can be extended later to include site configuration, categories, etc.
+    res.status(200).json({
+      success: true,
+      data: {},
     });
   } catch (error) {
     next(error);

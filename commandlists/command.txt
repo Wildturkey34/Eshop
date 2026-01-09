@@ -1,0 +1,3 @@
+
+nx g @nx/express:app admin-service --directory=apps/admin-service --e2eTestRunner=none
+stripe listen --forward-to localhost:6004/order/api/create-order

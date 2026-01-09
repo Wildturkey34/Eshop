@@ -1,4 +1,4 @@
-import prisma from '@packages/libs/prisma';
+import prisma from '../libs/prisma';
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
@@ -10,13 +10,13 @@ const isAuthenticated = async (req: any, res: Response, next: NextFunction) => {
       req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized! Token missing' });
+      return res.status(401).json({ message: 'Unauthorized! Token missing.' });
     }
 
     // verify token
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
       id: string;
-      role: 'user' | 'seller';
+      role: 'user' | 'seller' | 'admin';
     };
 
     if (!decoded) {
@@ -27,7 +27,7 @@ const isAuthenticated = async (req: any, res: Response, next: NextFunction) => {
 
     let account;
 
-    if (decoded.role === 'user') {
+    if (decoded.role === 'user' || decoded.role === 'admin') {
       account = await prisma.users.findUnique({
         where: { id: decoded.id },
       });
@@ -38,6 +38,7 @@ const isAuthenticated = async (req: any, res: Response, next: NextFunction) => {
         include: { shop: true },
       });
       req.seller = account;
+      req.user = account;
     }
 
     if (!account) {
@@ -48,6 +49,7 @@ const isAuthenticated = async (req: any, res: Response, next: NextFunction) => {
 
     return next();
   } catch (error) {
+    console.log(error);
     return res
       .status(401)
       .json({ message: 'Unauthorized! Token expired or invalid.' });

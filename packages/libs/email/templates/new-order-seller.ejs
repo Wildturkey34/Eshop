@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Order Received - Eshop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f9fafb;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #111827;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+      }
+
+      .header {
+        background-color: #059669;
+        padding: 20px;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .body {
+        padding: 30px;
+      }
+
+      .body h2 {
+        margin-top: 0;
+        font-size: 20px;
+        color: #111827;
+      }
+
+      .success-box {
+        background-color: #ecfdf5;
+        border-left: 4px solid #059669;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 20px;
+      }
+
+      .order-details {
+        background-color: #f3f4f6;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+
+      .order-details p {
+        margin: 8px 0;
+        line-height: 1.5;
+      }
+
+      .product-item {
+        background-color: #ffffff;
+        padding: 10px;
+        margin-top: 8px;
+        border-radius: 4px;
+        border: 1px solid #e5e7eb;
+      }
+
+      .total {
+        font-weight: bold;
+        font-size: 16px;
+        color: #059669;
+        margin-top: 10px;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: #2563eb;
+        color: #ffffff !important;
+        padding: 12px 20px;
+        margin-top: 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      .footer {
+        padding: 20px;
+        font-size: 12px;
+        text-align: center;
+        color: #6b7280;
+        background-color: #f9fafb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🛒 New Order Received!</h1>
+      </div>
+      <div class="body">
+        <h2>Hi <%= sellerName %>,</h2>
+        <p>
+          Great news! You've received a new order from a customer. Please process it as soon as possible.
+        </p>
+
+        <div class="success-box">
+          <p style="margin: 0; color: #059669; font-weight: 600">
+            💰 New Sale Confirmed
+          </p>
+        </div>
+
+        <div class="order-details">
+          <p><strong>Order ID:</strong> <%= orderId %></p>
+          <p><strong>Customer:</strong> <%= customerName %></p>
+          <p><strong>Order Date:</strong> <%= orderDate %></p>
+
+          <div style="margin-top: 15px">
+            <p style="margin-bottom: 8px"><strong>Items Ordered:</strong></p>
+            <% items.forEach(item => { %>
+            <div class="product-item">
+              <p style="margin: 4px 0">📦 <strong><%= item.title %></strong></p>
+              <p style="margin: 4px 0; font-size: 13px; color: #6b7280">
+                Quantity: <%= item.quantity %> × Rs.<%= item.price.toFixed(2) %> = Rs.<%= (item.quantity * item.price).toFixed(2) %>
+              </p>
+            </div>
+            <% }) %>
+          </div>
+
+          <p class="total">Total Amount: Rs.<%= totalAmount.toFixed(2) %></p>
+        </div>
+
+        <p style="margin-top: 20px; color: #374151">
+          <strong>Next Steps:</strong> Please prepare the items for shipment and update the order status in your dashboard.
+        </p>
+
+        <a href="<%= orderUrl %>" class="button">View Order Details</a>
+
+        <p style="margin-top: 25px; font-size: 13px; color: #6b7280">
+          💡 Tip: Fast processing times lead to better customer reviews and increased sales!
+        </p>
+      </div>
+      <div class="footer">
+        &copy; <%= new Date().getFullYear() %> Eshop. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

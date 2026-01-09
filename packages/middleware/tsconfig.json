@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/packages/middleware",
+    "rootDir": "."
+  },
+  "include": ["**/*.ts"],
+  "references": [
+    {
+      "path": "../libs/prisma"
+    },
+    {
+      "path": "../error-handler"
+    }
+  ]
+}

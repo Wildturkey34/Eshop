@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "../../packages/middleware"
+    },
+    {
+      "path": "../../packages/libs/prisma"
+    },
+    {
+      "path": "../../packages/error-handler"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}

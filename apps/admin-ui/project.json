@@ -1,0 +1,18 @@
+{
+  "name": "admin-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/admin-ui",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "dev": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "admin-ui:build",
+        "dev": true,
+        "port": 3002
+      }
+    }
+  }
+}

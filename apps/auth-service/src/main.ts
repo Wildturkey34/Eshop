@@ -1,7 +1,7 @@
 import "tsconfig-paths/register";
 import express from "express";
 import cors from "cors";
-import { errorMiddleware } from "@packages/error-handler/error-middleware";
+import { errorMiddleware } from "@packages/error-handler";
 import cookieParser from "cookie-parser";
 import router from "./routes/auth.router";
 import swaggerui from "swagger-ui-express";

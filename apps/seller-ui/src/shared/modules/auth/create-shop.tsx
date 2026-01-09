@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { shopCategories } from 'apps/seller-ui/src/utils/categories';
-import axios from 'axios';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const CreateShop = ({
   sellerId,
@@ -16,10 +17,14 @@ const CreateShop = ({
     formState: { errors },
   } = useForm();
 
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string>('');
+  const [uploading, setUploading] = useState(false);
+
   const shopCreateMutation = useMutation({
-    mutationFn: async (data: FormData) => {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/create-shop`,
+    mutationFn: async (data: any) => {
+      const response = await axiosInstance.post(
+        `/api/create-shop`,
         data
       );
       return response.data;
@@ -29,10 +34,60 @@ const CreateShop = ({
     },
   });
 
-  const onSubmit = async (data: any) => {
-    const shopData = { ...data, sellerId };
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
 
-    shopCreateMutation.mutate(shopData);
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onSubmit = async (data: any) => {
+    if (!avatarFile) {
+      alert('Please upload a shop logo');
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      // Upload avatar to ImageKit
+      const base64Image = await convertFileToBase64(avatarFile);
+      const uploadResponse = await axiosInstance.post(
+        `/product/api/upload-product-image`,
+        { fileName: base64Image }
+      );
+
+      const shopData = {
+        ...data,
+        sellerId,
+        avatar: {
+          fileId: uploadResponse.data.fileId,
+          url: uploadResponse.data.file_url,
+        },
+      };
+
+      shopCreateMutation.mutate(shopData);
+    } catch (error) {
+      console.error('Avatar upload failed:', error);
+      alert('Failed to upload avatar. Please try again.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const countWords = (text: string) => text.trim().split(/\s+/).length;
@@ -57,12 +112,27 @@ const CreateShop = ({
           <p className="text-red-500 text-sm">{String(errors.name.message)}</p>
         )}
 
+        <label className="block text-gray-700 mb-1">Shop Logo/Avatar *</label>
+        <input
+          type="file"
+          accept="image/*"
+          className="w-full p-2 border border-gray-300 outline-0 rounded-[4px] mb-1"
+          onChange={handleAvatarChange}
+        />
+        {avatarPreview && (
+          <img
+            src={avatarPreview}
+            alt="Avatar preview"
+            className="w-20 h-20 rounded-full object-cover mt-2 mb-2"
+          />
+        )}
+
         <label className="block text-gray-700 mb-1">
           Bio (Max 100 words) *
         </label>
-        <input
-          type="text"
+        <textarea
           placeholder="Shop Bio"
+          rows={3}
           className="w-full p-2 border border-gray-300 outline-0 rounded-[4px] mb-1"
           {...register('bio', {
             required: 'Bio is required',
@@ -111,7 +181,7 @@ const CreateShop = ({
           className="w-full p-2 border border-gray-300 outline-0 rounded-[4px] mb-1"
           {...register('website', {
             pattern: {
-              value: /^(https:\/\/)?([\w\d-]+\.)+w{2,}(\/.*)?$/,
+              value: /^(https?:\/\/)?([\w\d-]+\.)+\w{2,}(\/.*)?$/,
               message: 'Enter a valid URL',
             },
           })}
@@ -144,10 +214,14 @@ const CreateShop = ({
 
         <button
           type="submit"
-          disabled={shopCreateMutation.isPending}
-          className="w-full text-lg bg-blue-600 text-white py-2 rounded-lg mt-4"
+          disabled={shopCreateMutation.isPending || uploading}
+          className="w-full text-lg bg-blue-600 text-white py-2 rounded-lg mt-4 disabled:bg-blue-400"
         >
-          Create
+          {uploading
+            ? 'Uploading avatar...'
+            : shopCreateMutation.isPending
+              ? 'Creating...'
+              : 'Create Shop'}
         </button>
       </form>
     </div>
