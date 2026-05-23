@@ -1,0 +1,55 @@
+[
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6j001" },
+    "categories": [
+      "Electronics",
+      "Fashion",
+      "Home & Garden",
+      "Sports & Outdoors",
+      "Beauty & Health"
+    ],
+    "subCategories": {
+      "Electronics": [
+        "Headphones",
+        "Smartphones",
+        "Laptops",
+        "Cameras",
+        "Speakers",
+        "Smartwatches",
+        "Accessories"
+      ],
+      "Fashion": [
+        "Men's Clothing",
+        "Women's Clothing",
+        "Footwear",
+        "Bags & Accessories",
+        "Watches",
+        "Sunglasses"
+      ],
+      "Home & Garden": [
+        "Kitchen",
+        "Bedding",
+        "Furniture",
+        "Lighting",
+        "Garden Tools",
+        "Storage"
+      ],
+      "Sports & Outdoors": [
+        "Gym Equipment",
+        "Outdoor Gear",
+        "Yoga & Fitness",
+        "Cycling",
+        "Running"
+      ],
+      "Beauty & Health": [
+        "Skincare",
+        "Haircare",
+        "Supplements",
+        "Makeup",
+        "Personal Care"
+      ]
+    },
+    "logo": null,
+    "banner": null
+  }
+]

@@ -1,0 +1,55 @@
+flowchart TD
+    subgraph SERVICES["⚙️ Microservices"]
+        S1["auth-service\n\n• user signup\n• user login\n• OTP sent\n• seller registration"]
+        S2["order-service\n\n• payment session created\n• order confirmed"]
+        S3["product-service\n\n• product created\n• product updated\n• product deleted"]
+        S4["seller-service\n\n• seller actions"]
+        S5["admin-service\n\n• config changes"]
+    end
+
+    subgraph PRODUCER["📤 Producer — send-logs.ts (shared util)"]
+        P["sendLog()\n\nBuilds a message:\n• type  (info / error / warning / success / debug)\n• message\n• source  (which service)\n• timestamp"]
+        P_NOTE["⚡ Fire and forget\nFails silently if Kafka is down\nNever blocks the calling service"]
+    end
+
+    subgraph KAFKA["📬 Kafka Broker"]
+        K[/"Topic: logs"\]
+        K1["log: user signed up"]
+        K2["log: order confirmed"]
+        K3["log: product created"]
+        K --> K1
+        K --> K2
+        K --> K3
+    end
+
+    subgraph LOGGER["📥 Consumer — logger-service (Port 6008)"]
+        L1["Kafka Consumer\nlistens to 'logs' topic\n24/7"]
+        L2["logQueue[]\nin-memory array\n(no DB, no persistence)"]
+        L3{"Every 3 seconds\nprocessLogs()"}
+        L4["Broadcast each log\nto all connected\nWebSocket clients"]
+        L5[("clients Set\nSet of active\nWebSocket connections")]
+    end
+
+    subgraph ADMIN["🖥️ Admin Browser (admin-ui — Port 3002)"]
+        A["/dashboard/loggers\n\nLive log stream\ncolour-coded by type\ninfo / error / warning / success"]
+    end
+
+    S1 & S2 & S3 & S4 & S5 -->|"calls sendLog()"| P
+    P -->|"Kafka produce\n(async, non-blocking)"| K
+    P_NOTE -.- P
+    K -->|"messages queue up"| L1
+    L1 -->|"push to queue"| L2
+    L2 --> L3
+    L3 -->|"drain queue\nsend to each client"| L4
+    L4 -->|"WebSocket push"| L5
+    L5 -->|"real-time stream"| A
+
+    NOTE["❌ If no admin tab is open\nthe log is simply lost\n— no DB storage"]
+    L4 -.- NOTE
+
+    style SERVICES fill:#1e3a5f,color:#fff,stroke:#4a9eff
+    style PRODUCER fill:#1a4731,color:#fff,stroke:#4ade80
+    style KAFKA fill:#4a2c00,color:#fff,stroke:#fb923c
+    style LOGGER fill:#3b1f4e,color:#fff,stroke:#c084fc
+    style ADMIN fill:#1f3a3a,color:#fff,stroke:#2dd4bf
+    style NOTE fill:#3a1f1f,color:#fca5a5,stroke:#ef4444

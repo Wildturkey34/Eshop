@@ -1,18 +1,28 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import express from 'express';
-import * as path from 'path';
+import cookieParser from 'cookie-parser';
+import cron from 'node-cron';
+import router from './routes/recommendation.route';
+import { runOfflineSimilarityJob } from './services/similarity.service';
 
 const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
+app.use(cookieParser());
 
-app.get('/api', (req, res) => {
+app.use('/api', router);
+
+app.get('/', (_req, res) => {
   res.send({ message: 'Welcome to recommendation-service!' });
 });
+
+// Recompute similarities every 6 hours
+cron.schedule('0 */6 * * *', () => {
+  runOfflineSimilarityJob().catch(console.error);
+});
+
+// Run once on startup so Redis is populated before first request
+runOfflineSimilarityJob().catch(console.error);
 
 const port = process.env.PORT || 6007;
 const server = app.listen(port, () => {

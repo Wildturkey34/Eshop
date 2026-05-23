@@ -69,8 +69,8 @@ const ProductList = () => {
         cell: ({ row }: any) => {
           return (
             <Image
-              src={row.original.images[0]?.url}
-              alt={row.original.images[0]?.url}
+              src={row.original.images[0]?.url || 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=500'}
+              alt={row.original.title}
               width={200}
               height={200}
               className="w-12 h-12 rounded-md object-cover"

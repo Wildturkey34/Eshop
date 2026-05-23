@@ -7,6 +7,7 @@ import Stripe from 'stripe';
 import { Prisma } from '@prisma/client';
 import { sendEmail } from '../utils/send-email';
 import { sendEmail as sendSharedEmail } from '@packages/libs/email';
+import { sendLog } from '@packages/utils/logs/send-logs';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-10-29.clover',
@@ -53,12 +54,18 @@ export const createPaymentSession = async (
   next: NextFunction
 ) => {
   try {
-    const { cart, selectedAddressId, coupon } = req.body;
+    const { cart: rawCart, selectedAddressId, coupon } = req.body;
     const userId = req.user.id;
 
-    if (!cart || !Array.isArray(cart) || cart.length === 0) {
+    if (!rawCart || !Array.isArray(rawCart) || rawCart.length === 0) {
       return next(new ValidationError('Cart is empty or invalid.'));
     }
+
+    // Normalize: frontend store uses `price`, legacy code uses `sale_price` — support both
+    const cart = rawCart.map((item: any) => ({
+      ...item,
+      sale_price: item.sale_price ?? item.price,
+    }));
 
     const normalizedCart = JSON.stringify(
       cart
@@ -69,7 +76,7 @@ export const createPaymentSession = async (
           shopId: item.shopId,
           selectedOptions: item.selectedOptions || {},
         }))
-        .sort((a, b) => a.id.localCompare(b.id))
+        .sort((a, b) => a.id.localeCompare(b.id))
     );
 
     const keys = await redis.keys('payment-session:*');
@@ -90,7 +97,9 @@ export const createPaymentSession = async (
               .sort((a: any, b: any) => a.id.localeCompare(b.id))
           );
 
-          if (existingCart === normalizedCart) {
+          const sameAddress = session.shippingAddressId === (selectedAddressId || null);
+
+          if (existingCart === normalizedCart && sameAddress) {
             return res.status(200).json({ sessionId: key.split(':')[1] });
           } else {
             await redis.del(key);
@@ -393,7 +402,7 @@ export const createOrder = async (
               message: `A customer just ordered ${productTitle} from your shop.`,
               creatorId: userId,
               receiverId: shop.sellerId,
-              redirect_link: `/order/${sessionId}`,
+              redirect_link: `/order/${order.id}`,
             },
           });
 
@@ -447,8 +456,15 @@ export const createOrder = async (
             message: `A new order was placed by ${name}.`,
             creatorId: userId,
             receiverId: 'admin',
-            redirect_link: `/order/${sessionId}`,
+            redirect_link: `/order/${order.id}`,
           },
+        });
+
+        console.log(`[order-service] Order created for user ${userId}, shop ${shopId}, total: ${orderTotal}`);
+        sendLog({
+          type: 'success',
+          message: `Order created for user ${userId} — shop: ${shopId}, total: ${orderTotal}`,
+          source: 'order-service',
         });
 
         await redis.del(sessionKey);
@@ -624,6 +640,13 @@ export const updateDeliveryStatus = async (
         deliveryStatus,
         updatedAt: new Date(),
       },
+    });
+
+    console.log(`[order-service] Delivery status updated for order ${orderId}: ${deliveryStatus}`);
+    sendLog({
+      type: 'info',
+      message: `Delivery status updated for order ${orderId} → ${deliveryStatus}`,
+      source: 'order-service',
     });
 
     return res.status(200).json({

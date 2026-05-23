@@ -79,7 +79,7 @@ const AllProductsPage = () => {
       {
         accessorKey: 'sale_price',
         header: 'Price',
-        cell: ({ row }: any) => `$${row.original.sale_price}`,
+        cell: ({ row }: any) => `Rs.${row.original.sale_price}`,
       },
       {
         accessorKey: 'stock',

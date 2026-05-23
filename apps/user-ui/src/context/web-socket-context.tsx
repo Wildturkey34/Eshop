@@ -27,7 +27,9 @@ export const WebSocketProvider = ({
 
     // Skip WebSocket connection if no URL is configured
     if (!wsUrl) {
-      console.warn('WebSocket URL not configured. Chat features will be disabled.');
+      console.warn(
+        'WebSocket URL not configured. Chat features will be disabled.'
+      );
       return;
     }
 
@@ -44,7 +46,9 @@ export const WebSocketProvider = ({
       };
 
       ws.onerror = (error) => {
-        console.warn('WebSocket connection failed. Chat features may be unavailable.');
+        console.warn(
+          'WebSocket connection failed. Chat features may be unavailable.'
+        );
         setWsReady(false);
       };
 
@@ -52,7 +56,7 @@ export const WebSocketProvider = ({
         setWsReady(false);
       };
 
-      const handleMessage = (event: MessageEvent) => {
+      ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
 
@@ -64,23 +68,22 @@ export const WebSocketProvider = ({
           console.error('Failed to parse WebSocket message:', err);
         }
       };
-
-      ws.addEventListener('message', handleMessage);
-
-      return () => {
-        ws.removeEventListener('message', handleMessage);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.close();
-        }
-      };
     } catch (error) {
       console.error('Failed to initialize WebSocket:', error);
       setWsReady(false);
     }
+
+    return () => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
+    };
   }, [user?.id]);
 
   return (
-    <WebSocketContext.Provider value={{ ws: wsRef.current, unreadCounts, wsReady }}>
+    <WebSocketContext.Provider
+      value={{ ws: wsRef.current, unreadCounts, wsReady }}
+    >
       {children}
     </WebSocketContext.Provider>
   );

@@ -59,6 +59,9 @@
     },
     {
       "path": "./apps/recommendation-service"
+    },
+    {
+      "path": "./apps/logger-service"
     }
   ]
 }

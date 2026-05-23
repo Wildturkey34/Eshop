@@ -7,6 +7,7 @@ import {
   ValidationError,
 } from '@packages/error-handler';
 import { imagekit } from '@packages/libs/imagekit';
+import { sendLog } from '@packages/utils/logs/send-logs';
 
 // delete shop (soft delete)
 export const deleteShop = async (
@@ -48,6 +49,15 @@ export const deleteShop = async (
         },
       }),
     ]);
+
+    console.log(
+      `[seller-service] Shop deletion scheduled for seller ${sellerId}`
+    );
+    sendLog({
+      type: 'warning',
+      message: `Shop deletion scheduled for seller ${sellerId} — permanent in 28 days`,
+      source: 'seller-service',
+    });
 
     return res.status(200).json({
       message:
@@ -346,7 +356,7 @@ export const getSellerProducts = async (
       prisma.products.findMany({
         where: {
           starting_date: null,
-          shopId: req.query.id!,
+          shopId: req.params.id!,
         },
         skip,
         take: limit,
@@ -362,7 +372,7 @@ export const getSellerProducts = async (
       prisma.products.count({
         where: {
           starting_date: null,
-          shopId: req.query.id!,
+          shopId: req.params.id!,
         },
       }),
     ]);
@@ -399,7 +409,7 @@ export const getSellerEvents = async (
           starting_date: {
             not: null,
           },
-          shopId: req.query.id!,
+          shopId: req.params.id!,
         },
         skip,
         take: limit,
@@ -413,8 +423,10 @@ export const getSellerEvents = async (
 
       prisma.products.count({
         where: {
-          starting_date: null,
-          shopId: req.query.id!,
+          starting_date: {
+            not: null,
+          },
+          shopId: req.params.id!,
         },
       }),
     ]);
@@ -571,7 +583,9 @@ export const sellerNotifications = async (
       success: true,
       notifications,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 // mark notification as read
@@ -700,6 +714,174 @@ export const getSellerSettings = async (
         notificationPreference: seller.notificationPreference,
         emailNotifications: seller.emailNotifications,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// dashboard stats for seller
+export const getSellerDashboardStats = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const shop = await prisma.shops.findUnique({
+      where: { sellerId: req.seller.id },
+      select: { id: true },
+    });
+
+    if (!shop) return next(new NotFoundError('Shop not found'));
+    const shopId = shop.id;
+
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
+    sixMonthsAgo.setDate(1);
+    sixMonthsAgo.setHours(0, 0, 0, 0);
+
+    const [orders, shopAnalytics, totalOrdersCount] = await Promise.all([
+      prisma.orders.findMany({
+        where: { shopId, createdAt: { gte: sixMonthsAgo } },
+        select: { total: true, createdAt: true },
+      }),
+      prisma.shopAnalytics.findUnique({ where: { shopId } }),
+      prisma.orders.count({ where: { shopId } }),
+    ]);
+
+    const recentOrders = await prisma.orders.findMany({
+      where: { shopId },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      select: {
+        id: true,
+        total: true,
+        status: true,
+        createdAt: true,
+        userId: true,
+      },
+    });
+
+    // Group orders by month
+    const monthMap = new Map<string, number>();
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date();
+      d.setMonth(d.getMonth() - i);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      monthMap.set(key, 0);
+    }
+    for (const order of orders) {
+      const d = new Date(order.createdAt);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      if (monthMap.has(key)) monthMap.set(key, (monthMap.get(key) ?? 0) + order.total);
+    }
+    const monthlyRevenue = Array.from(monthMap.entries()).map(([month, count]) => ({ month, count }));
+
+    const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+
+    // Device stats from shopAnalytics
+    const rawDevice = (shopAnalytics?.deviceStats ?? {}) as Record<string, number>;
+    const deviceData = [
+      { name: 'Phone', value: rawDevice['mobile'] ?? 0 },
+      { name: 'Tablet', value: rawDevice['tablet'] ?? 0 },
+      { name: 'Computer', value: rawDevice['desktop'] ?? 0 },
+    ];
+
+    // Country stats
+    const rawCountry = (shopAnalytics?.countryStats ?? {}) as Record<string, number>;
+    const countryData = Object.entries(rawCountry).map(([name, users]) => ({
+      name,
+      users,
+      sellers: 0,
+    }));
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        totalOrders: totalOrdersCount,
+        totalRevenue,
+        monthlyRevenue,
+        deviceData,
+        countryData,
+        recentOrders,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Create shop review
+export const createShopReview = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const { shopId, rating, review } = req.body;
+
+    if (!shopId || !rating) throw new ValidationError('shopId and rating are required');
+    if (rating < 1 || rating > 5) throw new ValidationError('Rating must be between 1 and 5');
+
+    const shop = await prisma.shops.findUnique({ where: { id: shopId } });
+    if (!shop) throw new NotFoundError('Shop not found');
+
+    // Upsert: one review per user per shop
+    const existing = await prisma.shopReviews.findFirst({ where: { userId, shopsId: shopId } });
+    let shopReview;
+    if (existing) {
+      shopReview = await prisma.shopReviews.update({
+        where: { id: existing.id },
+        data: { rating, reviews: review ?? null, updatedAt: new Date() },
+      });
+    } else {
+      shopReview = await prisma.shopReviews.create({
+        data: { userId, shopsId: shopId, rating, reviews: review ?? null },
+      });
+    }
+
+    // Recalculate average rating
+    const agg = await prisma.shopReviews.aggregate({
+      where: { shopsId: shopId },
+      _avg: { rating: true },
+    });
+    await prisma.shops.update({
+      where: { id: shopId },
+      data: { ratings: agg._avg.rating ?? rating },
+    });
+
+    res.status(200).json({ success: true, review: shopReview });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get shop reviews
+export const getShopReviews = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { shopId } = req.params;
+
+    const reviews = await prisma.shopReviews.findMany({
+      where: { shopsId: shopId },
+      include: { user: { select: { id: true, name: true, avatar: true } } },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const agg = await prisma.shopReviews.aggregate({
+      where: { shopsId: shopId },
+      _avg: { rating: true },
+    });
+
+    res.status(200).json({
+      success: true,
+      reviews,
+      averageRating: agg._avg.rating ?? 0,
+      totalReviews: reviews.length,
     });
   } catch (error) {
     next(error);

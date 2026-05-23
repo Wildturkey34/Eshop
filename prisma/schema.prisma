@@ -32,10 +32,13 @@ model users {
   avatar      images[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  shopReviews shopReviews[]
-  orders      orders[]
-  followings  followers[]
-  addresses   address[]
+  shopReviews    shopReviews[]
+  productReviews productReviews[]
+  orders         orders[]
+  followings     followers[]
+  addresses      address[]
+  cartItems      cartItems[]
+  wishlistItems  wishlistItems[]
 }
 
 model shopReviews {
@@ -83,7 +86,7 @@ model shops {
   followers     followers[]
   followerCount Int           @default(0)
   sellerId      String        @unique @db.ObjectId
-  sellers       sellers       @relation(fields: [sellerId], references: [id])
+  sellers       sellers?      @relation(fields: [sellerId], references: [id])
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   isDeleted     Boolean       @default(false)
@@ -177,6 +180,7 @@ model products {
   updatedAt             DateTime      @updatedAt
   shopId                String        @db.ObjectId
   Shop                  shops         @relation(fields: [shopId], references: [id])
+  reviews               productReviews[]
   // Low stock alert tracking (prevents spam alerts)
   lastLowStockAlertAt   DateTime?
 
@@ -186,6 +190,23 @@ model products {
   @@index([ratings])
   @@index([total_sales])
   @@index([createdAt, status])
+}
+
+model productReviews {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      users    @relation(fields: [userId], references: [id])
+  productId String   @db.ObjectId
+  product   products @relation(fields: [productId], references: [id])
+  rating    Float
+  review    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId])
+  @@index([productId])
+  @@index([userId])
+  @@index([rating])
 }
 
 model userAnalytics {
@@ -282,6 +303,39 @@ model orderItems {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model cartItems {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId
+  user            users    @relation(fields: [userId], references: [id])
+  productId       String
+  title           String
+  price           Float
+  image           String
+  shopId          String
+  quantity        Int      @default(1)
+  selectedOptions Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, productId])
+  @@index([userId])
+}
+
+model wishlistItems {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      users    @relation(fields: [userId], references: [id])
+  productId String
+  title     String
+  price     Float
+  image     String
+  shopId    String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([userId])
 }
 
 enum addressType {

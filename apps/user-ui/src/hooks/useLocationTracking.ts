@@ -45,7 +45,7 @@ const useLocationTracking = () => {
       return;
     }
 
-    fetch('http://ip-api.com/json/') // CHANGED: http -> https
+    fetch('/api/location')
       .then((res) => res.json())
       .then((data) => {
         const newLocation: LocationData = {

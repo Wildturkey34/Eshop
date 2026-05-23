@@ -1,0 +1,76 @@
+classDiagram
+    direction TB
+    
+    %% Compact & High-Impact Class Diagram for MS Word compatibility
+    %% Focused on Core Business logic and UML Relationship Examples
+
+    class User {
+        -String id
+        +String name
+        +String email
+        -String password
+        +register()
+        +login()
+    }
+
+    class Seller {
+        -String id
+        +String name
+        -String stripeId
+        +registerVendor()
+    }
+
+    class Shop {
+        -String id
+        +String name
+        +String category
+        #Float ratings
+        +viewAnalytics()
+    }
+
+    class Product {
+        -String id
+        +String title
+        +Int stock
+        +Float sale_price
+        +updateStock()
+    }
+
+    class Order {
+        -String id
+        +Float total
+        +String status
+        +String deliveryStatus
+        +processPayment()
+    }
+
+    class OrderItem {
+        -String id
+        +Int quantity
+        +Float price
+    }
+
+    class Conversation {
+        -String id
+        +Boolean isGroup
+        +String name
+    }
+
+    class Message {
+        -String id
+        +String content
+        +String senderType
+    }
+
+    %% --- Relationship Layer (Optimized for straight lines) ---
+    
+    User "1" -- "*" Order : places
+    Seller "1" -- "1" Shop : owns
+    
+    Shop "1" o-- "*" Product : aggregates (Aggregation Example)
+    Order "1" *-- "*" OrderItem : contains (Composition Example)
+    
+    Conversation "1" *-- "*" Message : contains (Composition Example)
+    
+    User "1" -- "*" Conversation : participates
+    Seller "1" -- "*" Conversation : participates

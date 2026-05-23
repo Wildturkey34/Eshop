@@ -1,0 +1,52 @@
+sequenceDiagram
+    participant Client as User UI (Next.js)
+    participant Svc as Microservices Layer
+    participant Kafka as Kafka Service (Messaging)
+    participant Redis as Redis (Session/Status)
+    participant Stripe as Stripe API
+    participant DB as MongoDB (Prisma)
+
+    %% Flow 1: Event-Driven Analytics
+    rect rgb(240, 240, 255)
+    Note over Client, DB: Flow 1: High-Throughput Analytics Ingestion
+    Client->>Svc: User Action (View/Cart/Search)
+    activate Svc
+    Svc->>Kafka: Produce Event (user-events topic)
+    activate Kafka
+    Kafka->>Kafka: 3s Batch Accumulation
+    Kafka->>DB: Bulk Upsert (User/Product Analytics)
+    deactivate Kafka
+    deactivate Svc
+    end
+
+    %% Flow 2: Secure Payment & Order Lifecycle
+    rect rgb(240, 255, 240)
+    Note over Client, DB: Flow 2: Secure Payment Process (Stripe + Redis)
+    Client->>Svc: Checkout Request
+    activate Svc
+    Svc->>Redis: Cache Cart Session (10m TTL)
+    Svc->>Stripe: Init Payment Intent
+    activate Stripe
+    Stripe-->>Client: Redirect to Secure Checkout
+    deactivate Stripe
+    Stripe->>Svc: Webhook: payment_intent.succeeded
+    activate Svc
+    Svc->>Svc: Verify Webhook Signature
+    Svc->>DB: Create Order & Update Inventory
+    Svc->>Redis: Clear Session
+    deactivate Svc
+    end
+
+    %% Flow 3: Real-time Chat with Persistence
+    rect rgb(255, 240, 240)
+    Note over Client, DB: Flow 3: Real-time Messaging (WS + Kafka)
+    Client->>Svc: Chat Message (WebSocket)
+    activate Svc
+    Svc->>Redis: Check Recipient Online Status
+    Svc->>Client: Broadcast to Recipient (Immediate)
+    Svc->>Kafka: Produce Message to Persistence Topic
+    activate Kafka
+    Kafka->>DB: Async Write to Message Collection
+    deactivate Kafka
+    deactivate Svc
+    end

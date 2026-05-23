@@ -51,7 +51,7 @@ const CheckoutForm = ({
   };
 
   const total = cartItems.reduce(
-    (sum, item) => sum + item.sale_price * item.quantity,
+    (sum, item) => sum + (item.price ?? item.sale_price ?? 0) * (item.quantity ?? 1),
     0
   );
 
@@ -71,7 +71,7 @@ const CheckoutForm = ({
               <span>
                 {item.quantity} × {item.title}
               </span>
-              <span>Rs {(item.quantity * item.sale_price).toFixed(2)}</span>
+              <span>Rs {((item.quantity ?? 1) * (item.price ?? item.sale_price ?? 0)).toFixed(2)}</span>
             </div>
           ))}
 

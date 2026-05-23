@@ -4,6 +4,15 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/libs/redis"
+    },
+    {
+      "path": "../../packages/middleware"
+    },
+    {
+      "path": "../../packages/libs/prisma"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ]

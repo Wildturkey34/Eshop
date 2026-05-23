@@ -74,7 +74,7 @@ const EventsPage = () => {
       {
         accessorKey: 'sale_price',
         header: 'Price',
-        cell: ({ row }) => `$${row.original.sale_price}`,
+        cell: ({ row }) => `Rs.${row.original.sale_price}`,
       },
       {
         accessorKey: 'stock',

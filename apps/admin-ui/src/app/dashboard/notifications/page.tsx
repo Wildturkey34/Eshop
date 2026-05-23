@@ -50,7 +50,7 @@ const Notifications = () => {
                   <span className="text-white font-medium">{d.title}</span>
                   <span className="text-gray-300 text-sm">{d.message}</span>
                   <span className="text-gray-500 text-xs mt-1">
-                    {new Date(d.cratedAt).toLocaleString('en-UK', {
+                    {new Date(d.createdAt).toLocaleString('en-NP', {
                       dateStyle: 'medium',
                       timeStyle: 'short',
                     })}

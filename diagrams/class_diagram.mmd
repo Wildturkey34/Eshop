@@ -1,0 +1,141 @@
+classDiagram
+    direction TB
+    
+    %% Refined technical class diagram for E-shop Microservices
+    %% Optimized for readability with logical clustering and orthogonal-style routing
+
+    class User {
+        -String id
+        +String name
+        +String email
+        +String role
+        -String password
+        #DateTime createdAt
+        +register()
+        +login()
+    }
+
+    class Seller {
+        -String id
+        +String name
+        +String email
+        -String password
+        -String stripeId
+        #DateTime createdAt
+        +registerVendor()
+    }
+
+    class Shop {
+        -String id
+        +String name
+        +String category
+        +String address
+        #Float ratings
+        #Int followerCount
+        -String sellerId
+        +viewAnalytics()
+    }
+
+    class Product {
+        -String id
+        +String title
+        +String slug
+        +String category
+        +Int stock
+        +Float sale_price
+        +Float regular_price
+        #Float ratings
+        #Int total_sales
+        -String shopId
+        +updateStock()
+    }
+
+    %% Sales & Logistics Group
+    class Order {
+        -String id
+        +Float total
+        +String status
+        +String deliveryStatus
+        #DateTime createdAt
+        -String userId
+        -String shopId
+    }
+
+    class OrderItem {
+        -String id
+        +Int quantity
+        +Float price
+        -String orderId
+        -String productId
+    }
+
+    class Address {
+        -String id
+        +String street
+        +String city
+        +String country
+        +Boolean isDefault
+    }
+
+    class DiscountCode {
+        -String id
+        +String discountCode
+        +Float discountValue
+        -String sellerId
+    }
+
+    %% Analytics Group
+    class UserAnalytics {
+        -String id
+        +String device
+        #DateTime lastVisited
+        +Json actions
+        +Json recommendations
+    }
+
+    class ProductAnalytics {
+        -String id
+        #Int views
+        #Int cartAdds
+        #Int purchases
+        -String productId
+    }
+
+    class ShopAnalytics {
+        -String id
+        #Int totalVisitors
+        +Json countryStats
+        -String shopId
+    }
+
+    class Notification {
+        -String id
+        +String title
+        +String message
+        +String status
+    }
+
+    class SiteConfig {
+        -String id
+        +String[] categories
+        +Json subCategories
+    }
+
+    %% --- Relationship Layer ---
+    %% Hierarchical placement prioritized for straight-line routing
+
+    User "1" -- "*" Address
+    User "1" -- "*" Order
+    User "1" -- "1" UserAnalytics
+    User "1" -- "*" Notification
+
+    Seller "1" -- "1" Shop
+    Seller "1" -- "*" DiscountCode
+    
+    Shop "1" o-- "*" Product
+    Shop "1" -- "*" Order
+    Shop "1" -- "1" ShopAnalytics
+    
+    Product "1" -- "1" ProductAnalytics
+    
+    Order "1" *-- "*" OrderItem

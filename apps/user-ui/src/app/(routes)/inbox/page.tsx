@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import ChatInput from 'apps/user-ui/src/shared/components/chats/chatinput';
@@ -10,7 +10,7 @@ import { isProtected } from 'apps/user-ui/src/utils/protected';
 import { useWebSocket } from 'apps/user-ui/src/context/web-socket-context';
 import useUser from 'apps/user-ui/src/hooks/useUser';
 
-const ChatPage = () => {
+const ChatContent = () => {
   const searchParams = useSearchParams();
   const { user } = useUser();
   const router = useRouter();
@@ -27,10 +27,10 @@ const ChatPage = () => {
   const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
   const conversationId = searchParams.get('conversationId');
 
-  const { data: messages = [] } = useQuery({
+  const { data: messagesData } = useQuery({
     queryKey: ['messages', conversationId],
     queryFn: async () => {
-      if (!conversationId || hasFetchedOnce) return [];
+      if (!conversationId || hasFetchedOnce) return null;
       const res = await axiosInstance.get(
         `/chatting/api/get-messages/${conversationId}?page=1`,
         isProtected
@@ -38,11 +38,13 @@ const ChatPage = () => {
       setPage(1);
       setHasMore(res.data.hasMore);
       setHasFetchedOnce(true);
-      return res.data.messages.reverse();
+      return { messages: res.data.messages.reverse(), seller: res.data.seller };
     },
     enabled: !!conversationId,
     staleTime: 2 * 60 * 1000,
   });
+
+  const messages = messagesData?.messages ?? [];
 
   const loadMoreMessages = async () => {
     const nextPage = page + 1;
@@ -51,10 +53,10 @@ const ChatPage = () => {
       isProtected
     );
 
-    queryClient.setQueryData(['messages', conversationId], (old: any = []) => [
-      ...res.data.messages.reverse(),
-      ...old,
-    ]);
+    queryClient.setQueryData(['messages', conversationId], (old: any) => ({
+      messages: [...res.data.messages.reverse(), ...(old?.messages ?? [])],
+      seller: old?.seller,
+    }));
 
     setPage(nextPage);
     setHasMore(res.data.hasMore);
@@ -72,16 +74,19 @@ const ChatPage = () => {
         if (newMsg.conversationId === conversationId) {
           queryClient.setQueryData(
             ['messages', conversationId],
-            (old: any = []) => [
-              ...old,
-              {
-                content: newMsg.messageBody || newMsg.content || '',
-                senderType: newMsg.senderType,
-                seen: false,
-                attachments: newMsg.attachments || [],
-                createdAt: newMsg.createdAt || new Date().toISOString(),
-              },
-            ]
+            (old: any) => ({
+              messages: [
+                ...(old?.messages ?? []),
+                {
+                  content: newMsg.messageBody || newMsg.content || '',
+                  senderType: newMsg.senderType,
+                  seen: false,
+                  attachments: newMsg.attachments || [],
+                  createdAt: newMsg.createdAt || new Date().toISOString(),
+                },
+              ],
+              seller: old?.seller,
+            })
           );
           scrollToBottom();
         }
@@ -141,12 +146,33 @@ const ChatPage = () => {
     if (conversations) setChats(conversations);
   }, [conversations]);
 
+  // When arriving with a conversationId (e.g. from "Chat Now"), force-refresh
+  // the conversations list so the new conversation appears in the sidebar
+  useEffect(() => {
+    if (conversationId) {
+      queryClient.invalidateQueries({ queryKey: ['conversations'] });
+    }
+  }, [conversationId]);
+
   useEffect(() => {
     if (conversationId && chats.length > 0) {
       const chat = chats.find((c) => c.conversationId === conversationId);
-      setSelectedChat(chat || null);
+      if (chat) setSelectedChat(chat);
     }
   }, [conversationId, chats]);
+
+  // Fallback: if conversationId is set but not found in chats list yet,
+  // use seller info from the messages response to show the chat panel
+  useEffect(() => {
+    if (conversationId && !selectedChat && messagesData?.seller) {
+      setSelectedChat({
+        conversationId,
+        seller: messagesData.seller,
+        lastMessage: '',
+        unreadCount: 0,
+      });
+    }
+  }, [conversationId, selectedChat, messagesData?.seller]);
 
   const handleChatSelect = (chat: any) => {
     setHasFetchedOnce(false);
@@ -355,5 +381,11 @@ const ChatPage = () => {
     </div>
   );
 };
+
+const ChatPage = () => (
+  <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">Loading...</div>}>
+    <ChatContent />
+  </Suspense>
+);
 
 export default ChatPage;

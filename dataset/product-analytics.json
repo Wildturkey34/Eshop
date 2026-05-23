@@ -1,0 +1,1002 @@
+[
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a001"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e001",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 15,
+    "cartAdds": 2,
+    "wishListAdds": 3,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-23T10:30:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-01T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T10:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a002"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e002",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 5,
+    "cartAdds": 0,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-19T10:30:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-01T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T10:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a003"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e003",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-13T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-01T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-13T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a004"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e004",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 12,
+    "cartAdds": 1,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-20T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-02T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a005"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e005",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 5,
+    "cartAdds": 1,
+    "wishListAdds": 1,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-15T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-02T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-15T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a006"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e006",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-02T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-02T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-02T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a007"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e007",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 6,
+    "cartAdds": 0,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-15T10:30:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-03T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-15T10:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a008"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e008",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 1,
+    "cartAdds": 1,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-07T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-03T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-07T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a009"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e009",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-03T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-03T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-03T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a010"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e010",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-04T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-04T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-04T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a011"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e011",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 5,
+    "cartAdds": 0,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-20T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-04T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a012"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e012",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-04T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-04T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-04T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a013"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e013",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 5,
+    "cartAdds": 1,
+    "wishListAdds": 3,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-21T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-05T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a014"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e014",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-13T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-05T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-13T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a015"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e015",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-05T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-05T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-05T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a016"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e016",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-05T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-05T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-05T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a017"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e017",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 10,
+    "cartAdds": 2,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-21T16:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-06T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T16:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a018"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e018",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-11T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-06T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-11T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a019"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e019",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-06T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-06T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-06T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a020"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e020",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-06T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a021"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e021",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-06T12:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-06T12:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-06T12:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a022"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e022",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-07T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-07T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-07T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a023"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e023",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-07T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-07T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-07T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a024"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e024",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-07T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-07T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-07T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a025"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e025",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-07T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-07T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-07T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a026"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e026",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-07T12:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-07T12:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-07T12:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a027"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e027",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-08T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-08T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-08T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a028"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e028",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-08T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-08T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-08T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a029"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e029",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-08T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-08T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-08T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a030"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e030",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 6,
+    "cartAdds": 1,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-23T14:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-09T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T14:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a031"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e031",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-12T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-09T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-12T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a032"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e032",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-09T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-09T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-09T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a033"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e033",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 5,
+    "cartAdds": 1,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-09T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a034"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e034",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 11,
+    "cartAdds": 1,
+    "wishListAdds": 3,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-23T14:30:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-10T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T14:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a035"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e035",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-10T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-10T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-10T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a036"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e036",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 7,
+    "cartAdds": 1,
+    "wishListAdds": 2,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-22T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-11T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a037"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e037",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 10,
+    "cartAdds": 1,
+    "wishListAdds": 3,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-22T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-11T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a038"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e038",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-10T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-11T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-10T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a039"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e039",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-11T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-11T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-11T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a040"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e040",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 1,
+    "cartAdds": 0,
+    "wishListAdds": 1,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-19T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-12T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a041"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e041",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-12T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-12T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-12T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a042"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e042",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 1,
+    "cartAdds": 1,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-13T14:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-12T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-13T14:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a043"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e043",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-12T11:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-12T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-12T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a044"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e044",
+    "shopId": "67e5c8f4a1b2c3d4e5f60011",
+    "views": 7,
+    "cartAdds": 1,
+    "wishListAdds": 3,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-23T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-13T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a045"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e045",
+    "shopId": "67e5c8f4a1b2c3d4e5f60012",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-13T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-13T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-13T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a046"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e046",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-13T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-13T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-13T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a047"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e047",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 5,
+    "cartAdds": 2,
+    "wishListAdds": 1,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-19T09:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-13T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a048"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e048",
+    "shopId": "67e5c8f4a1b2c3d4e5f60013",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-14T08:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-14T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-14T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a049"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e049",
+    "shopId": "67e5c8f4a1b2c3d4e5f60014",
+    "views": 1,
+    "cartAdds": 1,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2026-01-12T12:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-14T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-12T12:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6a050"
+    },
+    "productId": "67e5c8f4a1b2c3d4e5f6e050",
+    "shopId": "67e5c8f4a1b2c3d4e5f60015",
+    "views": 0,
+    "cartAdds": 0,
+    "wishListAdds": 0,
+    "purchases": 0,
+    "lastViewedAt": {
+      "$date": "2025-08-14T10:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-08-14T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2025-08-14T10:00:00.000Z"
+    }
+  }
+]

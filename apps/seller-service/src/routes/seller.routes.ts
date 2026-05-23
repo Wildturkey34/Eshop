@@ -2,13 +2,16 @@ import isAuthenticated from '@packages/middleware/isAuthenticated';
 import { isSeller } from '@packages/middleware/authorizeRoles';
 import express from 'express';
 import {
+  createShopReview,
   deleteShop,
   editSellerProfile,
   followShop,
+  getSellerDashboardStats,
   getSellerEvents,
   getSellerInfo,
   getSellerProducts,
   getSellerSettings,
+  getShopReviews,
   isFollowing,
   markNotificationAsRead,
   restoreShop,
@@ -45,5 +48,8 @@ router.post(
 );
 router.put('/settings', isAuthenticated, isSeller, saveSellerSettings);
 router.get('/settings', isAuthenticated, isSeller, getSellerSettings);
+router.get('/dashboard-stats', isAuthenticated, isSeller, getSellerDashboardStats);
+router.post('/create-shop-review', isAuthenticated, createShopReview);
+router.get('/get-shop-reviews/:shopId', getShopReviews);
 
 export default router;

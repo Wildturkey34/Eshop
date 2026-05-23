@@ -75,7 +75,7 @@ const WishlistPage = () => {
                   <tr key={item.id} className="border-b border-b-[#0000000e]">
                     <td className="flex items-center gap-3 p-4">
                       <Image
-                        src={item.images[0]?.url}
+                        src={item.image || item.images?.[0]?.url || 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=500'}
                         alt={item.title}
                         width={100}
                         height={100}
@@ -84,7 +84,7 @@ const WishlistPage = () => {
                       <span className="font-semibold">{item.title}</span>
                     </td>
                     <td className="px-6 text-lg">
-                      Rs {item?.sale_price.toFixed(2)}
+                      Rs {(item?.price ?? item?.sale_price ?? 0).toFixed(2)}
                     </td>
                     <td>
                       <div className="flex justify-center items-center border border-gray-200 rounded-[20px] w-[90px] p-[2px]">

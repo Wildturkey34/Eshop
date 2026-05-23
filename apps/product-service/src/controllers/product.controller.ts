@@ -8,6 +8,7 @@ import prisma from '@packages/libs/prisma';
 import { Prisma } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import Stripe from 'stripe';
+import { sendLog } from '@packages/utils/logs/send-logs';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-10-29.clover',
@@ -291,6 +292,13 @@ export const createProduct = async (
       include: { images: true },
     });
 
+    console.log(`[product-service] New product created: "${title}" by seller ${req.seller.id}`);
+    sendLog({
+      type: 'success',
+      message: `New product created: "${title}" by seller ${req.seller.id}`,
+      source: 'product-service',
+    });
+
     res.status(201).json({
       success: true,
       product: newProduct, // Changed from newProduct for consistency
@@ -360,6 +368,13 @@ export const deleteProduct = async (
       },
     });
 
+    console.log(`[product-service] Product ${productId} scheduled for deletion by seller ${sellerId}`);
+    sendLog({
+      type: 'warning',
+      message: `Product ${productId} scheduled for deletion by seller ${sellerId}`,
+      source: 'product-service',
+    });
+
     return res.status(200).json({
       message:
         'Product is scheduled for deletion in 24 hours. You can restore within this time frame.',
@@ -400,6 +415,13 @@ export const restoreProduct = async (
     await prisma.products.update({
       where: { id: productId },
       data: { isDeleted: false, deletedAt: null },
+    });
+
+    console.log(`[product-service] Product ${productId} restored by seller ${sellerId}`);
+    sendLog({
+      type: 'info',
+      message: `Product ${productId} restored by seller ${sellerId}`,
+      source: 'product-service',
     });
 
     return res.status(200).json({ message: 'Product successfully restored!' });
@@ -1038,5 +1060,87 @@ export const getProductAnalytics = async (
     });
   } catch (error) {
     return next(error);
+  }
+};
+
+// create a product review
+export const createProductReview = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const { productId, rating, review } = req.body;
+
+    if (!productId || !rating) {
+      return next(new ValidationError('productId and rating are required'));
+    }
+    if (rating < 1 || rating > 5) {
+      return next(new ValidationError('Rating must be between 1 and 5'));
+    }
+
+    const product = await prisma.products.findUnique({ where: { id: productId } });
+    if (!product) return next(new NotFoundError('Product not found'));
+
+    const existing = await prisma.productReviews.findUnique({
+      where: { userId_productId: { userId, productId } },
+    });
+    if (existing) {
+      return next(new ValidationError('You have already reviewed this product'));
+    }
+
+    await prisma.productReviews.create({
+      data: { userId, productId, rating, review: review || null },
+    });
+
+    // Recalculate average rating
+    const agg = await prisma.productReviews.aggregate({
+      where: { productId },
+      _avg: { rating: true },
+      _count: { rating: true },
+    });
+    await prisma.products.update({
+      where: { id: productId },
+      data: { ratings: agg._avg.rating ?? product.ratings },
+    });
+
+    res.status(201).json({ success: true, message: 'Review submitted successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// get reviews for a product
+export const getProductReviews = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { productId } = req.params;
+
+    const reviews = await prisma.productReviews.findMany({
+      where: { productId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { id: true, name: true } },
+      },
+    });
+
+    const agg = await prisma.productReviews.aggregate({
+      where: { productId },
+      _avg: { rating: true },
+      _count: { rating: true },
+    });
+
+    res.status(200).json({
+      success: true,
+      reviews,
+      averageRating: agg._avg.rating ?? 0,
+      totalReviews: agg._count.rating,
+    });
+  } catch (error) {
+    next(error);
   }
 };

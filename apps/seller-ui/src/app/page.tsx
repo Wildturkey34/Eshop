@@ -25,6 +25,50 @@ import XIcon from '../assets/icons/xIcon';
 
 const TABS = ['Products', 'Offers', 'Reviews'];
 
+const ShopReviewsTab = ({ shopId }: { shopId?: string }) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['shop-reviews', shopId],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/seller/api/get-shop-reviews/${shopId}`);
+      return res.data;
+    },
+    enabled: !!shopId,
+  });
+
+  if (isLoading) return <p className="text-gray-400 text-sm py-4">Loading reviews...</p>;
+  if (!data?.reviews?.length) return <p className="text-gray-400 text-sm py-4">No reviews available yet!</p>;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-white font-semibold text-lg">
+          {Number(data.averageRating).toFixed(1)} ★
+        </span>
+        <span className="text-gray-400 text-sm">
+          ({data.totalReviews} {data.totalReviews === 1 ? 'review' : 'reviews'})
+        </span>
+      </div>
+      {data.reviews.map((r: any) => (
+        <div key={r.id} className="bg-gray-800 border border-gray-700 rounded-lg p-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center text-white font-semibold text-sm">
+              {r.user?.name?.[0]?.toUpperCase() ?? '?'}
+            </div>
+            <div>
+              <p className="text-sm font-medium text-white">{r.user?.name ?? 'Anonymous'}</p>
+              <p className="text-xs text-gray-400">{new Date(r.createdAt).toLocaleDateString()}</p>
+            </div>
+            <div className="ml-auto text-yellow-400 text-sm">
+              {'★'.repeat(Math.round(r.rating))}{'☆'.repeat(5 - Math.round(r.rating))}
+            </div>
+          </div>
+          {r.reviews && <p className="text-sm text-gray-300">{r.reviews}</p>}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const fetchProducts = async () => {
   const res = await axiosInstance.get('/product/api/get-shop-products');
   const products = res.data.products?.filter((i: any) => !i.starting_date);
@@ -270,7 +314,9 @@ const SellerProfile = () => {
                   {events?.length === 0 && <p>No offers available yet!</p>}
                 </div>
               )}
-              {activeTab === 'Reviews' && <div>No reviews available yet!</div>}
+              {activeTab === 'Reviews' && (
+                <ShopReviewsTab shopId={seller?.shop?.id} />
+              )}
             </div>
           </div>
 

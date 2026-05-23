@@ -8,19 +8,19 @@ import { useEffect, useState } from 'react';
 import { Range } from 'react-range';
 
 const MIN = 0;
-const MAX = 1199;
+const MAX = 100000;
 
 const Page = () => {
   const router = useRouter();
   const [isProductLoading, setIsProductLoading] = useState(false);
-  const [priceRange, setPriceRange] = useState([0, 1199]);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState<any[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [tempPriceRange, setTempPriceRange] = useState([0, 1199]);
+  const [tempPriceRange, setTempPriceRange] = useState([0, 100000]);
 
   const colors = [
     { name: 'Black', code: '#000' },
@@ -284,11 +284,10 @@ const Page = () => {
                   <button
                     key={i + 1}
                     onClick={() => setPage(i + 1)}
-                    className={`px-3 py-1 !rounded border border-gray-200  text-sm ${
-                      page === i + 1
+                    className={`px-3 py-1 !rounded border border-gray-200  text-sm ${page === i + 1
                         ? 'bg-blue-600 text-white'
                         : 'bg-white text-black'
-                    }`}
+                      }`}
                   >
                     {i + 1}
                   </button>

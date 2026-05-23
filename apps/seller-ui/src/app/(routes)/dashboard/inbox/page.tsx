@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import ChatInput from 'apps/seller-ui/src/shared/components/chats/chatinput';
@@ -9,7 +9,7 @@ import { useWebSocket } from 'apps/seller-ui/src/context/web-socket-context';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from 'apps/seller-ui/src/utils/axiosInstance';
 
-const ChatPage = () => {
+const ChatContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const messageContainerRef = useRef<HTMLDivElement | null>(null);
@@ -197,8 +197,9 @@ const ChatPage = () => {
                   <button
                     key={chat.conversationId}
                     onClick={() => handleChatSelect(chat)}
-                    className={`w-full text-left px-4 py-3 transition ${isActive ? 'bg-blue-950' : 'hover:bg-gray-800'
-                      }`}
+                    className={`w-full text-left px-4 py-3 transition ${
+                      isActive ? 'bg-blue-950' : 'hover:bg-gray-800'
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <Image
@@ -273,16 +274,18 @@ const ChatPage = () => {
                 {messages.map((msg: any, idx: number) => (
                   <div
                     key={idx}
-                    className={`flex flex-col ${msg.senderType === 'seller'
-                      ? 'items-end ml-auto'
-                      : 'items-start'
-                      } max-w-[80%]`}
+                    className={`flex flex-col ${
+                      msg.senderType === 'seller'
+                        ? 'items-end ml-auto'
+                        : 'items-start'
+                    } max-w-[80%]`}
                   >
                     <div
-                      className={`${msg.senderType === 'seller'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-800 text-gray-200'
-                        } px-4 py-2 rounded-lg shadow-sm w-fit`}
+                      className={`${
+                        msg.senderType === 'seller'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-800 text-gray-200'
+                      } px-4 py-2 rounded-lg shadow-sm w-fit`}
                     >
                       {msg.attachments && msg.attachments.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-2">
@@ -302,10 +305,11 @@ const ChatPage = () => {
                       {msg.content}
                     </div>
                     <div
-                      className={`text-[11px] text-gray-400 mt-1 flex items-center gap-1 ${msg.senderType === 'seller'
-                        ? 'mr-1 justify-end'
-                        : 'ml-1'
-                        }`}
+                      className={`text-[11px] text-gray-400 mt-1 flex items-center gap-1 ${
+                        msg.senderType === 'seller'
+                          ? 'mr-1 justify-end'
+                          : 'ml-1'
+                      }`}
                     >
                       {new Date(msg.createdAt).toLocaleTimeString([], {
                         hour: '2-digit',
@@ -333,5 +337,11 @@ const ChatPage = () => {
     </div>
   );
 };
+
+const ChatPage = () => (
+  <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">Loading...</div>}>
+    <ChatContent />
+  </Suspense>
+);
 
 export default ChatPage;

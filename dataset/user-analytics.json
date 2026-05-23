@@ -1,0 +1,1658 @@
+[
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f001"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d001",
+    "country": "Nepal",
+    "city": "Kathmandu",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-20T18:30:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-10T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-11T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-11T10:05:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-12T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-12T11:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-13T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-13T14:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T16:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-15T09:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-16T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-16T11:15:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-20T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-01T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T18:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f002"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d002",
+    "country": "Nepal",
+    "city": "Pokhara",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-21T14:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-08T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-09T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-09T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-09T11:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-10T13:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-10T13:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-11T15:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-11T15:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-12T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-12T09:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-13T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-14T12:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-21T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-02T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T14:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f003"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d003",
+    "country": "Nepal",
+    "city": "Biratnagar",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-19T20:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-05T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-06T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-06T09:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e008",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-07T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e008",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-07T10:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-08T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-08T11:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-09T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-09T14:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-10T16:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-10T16:20:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-19T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-03T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T20:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f004"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d004",
+    "country": "Nepal",
+    "city": "Surkhet",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-22T11:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-07T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-07T08:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-08T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-08T09:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-09T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-09T10:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e038",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-10T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-11T12:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-12T13:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e042",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-13T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e042",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-13T14:20:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-22T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-04T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f005"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d005",
+    "country": "Nepal",
+    "city": "Lalitpur",
+    "device": "tablet",
+    "lastVisited": {
+      "$date": "2026-01-23T17:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-06T07:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-07T07:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-07T07:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-08T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-08T08:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-09T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-09T09:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-10T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-11T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e049",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-12T12:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e049",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-12T12:30:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-23T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-05T12:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T17:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f006"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d006",
+    "country": "Nepal",
+    "city": "Bharatpur",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-18T12:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-12T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-12T09:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e003",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-13T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-14T11:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-15T13:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-18T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-06T08:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-18T12:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f007"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d007",
+    "country": "Nepal",
+    "city": "Birgunj",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-17T19:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-10T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-10T10:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e018",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-11T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-12T12:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-12T12:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-13T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-14T15:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-17T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-07T09:15:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-17T19:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f008"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d008",
+    "country": "Nepal",
+    "city": "Dhangadhi",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-20T10:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-11T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-11T08:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-12T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-12T09:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-13T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-13T10:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T12:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-20T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-08T10:45:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f009"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d009",
+    "country": "Nepal",
+    "city": "Hetauda",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-19T16:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-13T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-13T09:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-15T11:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-16T14:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-19T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-09T11:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T16:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f010"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d010",
+    "country": "Nepal",
+    "city": "Butwal",
+    "device": "tablet",
+    "lastVisited": {
+      "$date": "2026-01-21T09:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-12T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-12T08:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e014",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-13T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-14T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-14T10:25:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-21T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-10T13:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f011"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d011",
+    "country": "India",
+    "city": "Mumbai",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-16T15:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-10T07:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-10T07:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-11T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e031",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-12T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-13T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-13T10:20:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-16T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-11T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-16T15:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f012"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d012",
+    "country": "India",
+    "city": "Bengaluru",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-22T18:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-13T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-13T09:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-15T11:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-16T13:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-22T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-12T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T18:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f013"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d013",
+    "country": "India",
+    "city": "Delhi",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-20T13:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-14T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-14T08:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-15T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-16T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-17T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-17T11:15:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-20T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-13T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T13:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f014"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d014",
+    "country": "India",
+    "city": "Chennai",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-18T20:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-12T07:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-12T07:25:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-13T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-14T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-16T13:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-18T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-14T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-18T20:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f015"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d015",
+    "country": "Bangladesh",
+    "city": "Dhaka",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-21T10:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-14T09:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-16T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-17T12:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-17T12:10:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-21T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-15T12:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f016"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d016",
+    "country": "Bangladesh",
+    "city": "Chittagong",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-15T11:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-14T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-15T11:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-18T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-19T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-20T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-21T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-23T13:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-25T15:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-15T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-16T08:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-15T11:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f017"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d017",
+    "country": "Australia",
+    "city": "Sydney",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-16T09:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-14T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e047",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-15T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-16T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-16T09:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-22T12:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-24T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e005",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-26T16:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-16T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-17T09:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-16T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f018"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d018",
+    "country": "Australia",
+    "city": "Melbourne",
+    "device": "tablet",
+    "lastVisited": {
+      "$date": "2026-01-17T14:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-15T10:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e007",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-15T10:45:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-16T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-17T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-02-03T09:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-17T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-18T10:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-17T14:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f019"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d019",
+    "country": "United States",
+    "city": "New York",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-18T08:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-16T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_cart",
+        "timestamp": "2026-01-16T09:20:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-17T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-18T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-18T08:30:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-18T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-19T11:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-18T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f020"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d020",
+    "country": "United States",
+    "city": "Los Angeles",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-19T07:30:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-17T07:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-18T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-18T08:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-19T07:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-02-02T08:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-19T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-20T12:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-19T07:30:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f021"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d021",
+    "country": "United Kingdom",
+    "city": "London",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-20T09:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-18T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-18T08:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e040",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-19T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e040",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-19T09:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e011",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-20T09:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-20T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-21T08:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-20T09:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f022"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d022",
+    "country": "Germany",
+    "city": "Berlin",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-21T16:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-19T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-19T10:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e002",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-19T10:45:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-20T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e017",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-21T16:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-21T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-22T09:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-21T16:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f023"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d023",
+    "country": "France",
+    "city": "Paris",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e004",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-20T08:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-21T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-21T09:30:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e033",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-21T09:45:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e020",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-22T08:00:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-22T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-23T10:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-22T08:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f024"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d024",
+    "country": "Canada",
+    "city": "Toronto",
+    "device": "mobile",
+    "lastVisited": {
+      "$date": "2026-01-23T10:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "product_view",
+        "timestamp": "2026-01-21T09:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e013",
+        "shopId": "67e5c8f4a1b2c3d4e5f60012",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-21T09:15:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e037",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-22T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e044",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-23T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-23T10:30:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-23T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-24T11:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T10:00:00.000Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67e5c8f4a1b2c3d4e5f6f025"
+    },
+    "userId": "67e5c8f4a1b2c3d4e5f6d025",
+    "country": "Canada",
+    "city": "Vancouver",
+    "device": "desktop",
+    "lastVisited": {
+      "$date": "2026-01-23T14:00:00.000Z"
+    },
+    "actions": [
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "product_view",
+        "timestamp": "2026-01-21T10:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e001",
+        "shopId": "67e5c8f4a1b2c3d4e5f60011",
+        "action": "add_to_wishlist",
+        "timestamp": "2026-01-21T10:10:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e036",
+        "shopId": "67e5c8f4a1b2c3d4e5f60015",
+        "action": "product_view",
+        "timestamp": "2026-01-22T11:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e030",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-23T14:00:00.000Z"
+      },
+      {
+        "productId": "67e5c8f4a1b2c3d4e5f6e034",
+        "shopId": "67e5c8f4a1b2c3d4e5f60014",
+        "action": "product_view",
+        "timestamp": "2026-01-23T14:30:00.000Z"
+      }
+    ],
+    "recommendations": null,
+    "lastTrained": {
+      "$date": "2026-01-23T00:00:00.000Z"
+    },
+    "createdAt": {
+      "$date": "2025-07-25T12:30:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-01-23T14:00:00.000Z"
+    }
+  }
+]

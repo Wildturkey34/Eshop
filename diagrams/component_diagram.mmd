@@ -1,0 +1,59 @@
+graph TB
+    %% High-Fidelity Component Diagram for E-shop Monorepo
+    
+    subgraph Clients ["Web Frontend Applications (Next.js)"]
+        U_UI[User Interface]
+        S_UI[Seller Dashboard]
+        A_UI[Admin Control Panel]
+    end
+
+    subgraph Entry ["Edge Services"]
+        AGW[API Gateway]
+        Auth[Auth Service]
+    end
+
+    subgraph Core_Services ["Business Microservices"]
+        direction TB
+        Prod[Product Service]
+        Order[Order Service]
+        Seller[Seller Service]
+        Admin[Admin Service]
+    end
+
+    subgraph Realtime_Services ["Low-Latency & ML Services"]
+        Chat[Chatting Service]
+        Rec[Recommendation Service]
+        KafkaS[Kafka Service]
+    end
+
+    subgraph Shared ["NX Shared Packages"]
+        K_Lib["@packages/kafka"]
+        L_Lib["@packages/logger"]
+        C_Lib["@packages/utils"]
+    end
+
+    %% Client to Edge
+    U_UI -- "GraphQL/REST" --> AGW
+    S_UI -- "GraphQL/REST" --> AGW
+    A_UI -- "GraphQL/REST" --> AGW
+    
+    %% Edge to Services
+    AGW -- "Proxy/JWT" --> Auth
+    AGW -- "Route Requests" --> Core_Services
+    AGW -- "Route Requests" --> Realtime_Services
+
+    %% Internal Service Interactions
+    Order -- "Validate Seller" --> Seller
+    Admin -- "Moderate" --> Prod
+    Chat -- "Broadcast Stats" --> KafkaS
+    Rec -- "Fetch Stats" --> KafkaS
+
+    %% Shared Dependencies
+    Core_Services & Realtime_Services -. "Extends" .-> Shared
+
+    %% Styling for visual appeal
+    style Clients fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style Entry fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style Core_Services fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+    style Realtime_Services fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    style Shared fill:#fafafa,stroke:#9e9e9e,stroke-dasharray: 5 5

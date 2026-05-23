@@ -4,12 +4,12 @@ import { Elements } from '@stripe/react-stripe-js';
 import axiosInstance from 'apps/user-ui/src/utils/axiosInstance';
 import { XCircle } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import CheckoutForm from 'apps/user-ui/src/shared/components/checkout/CheckoutForm';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
-const Page = () => {
+const CheckoutContent = () => {
   const [clientSecret, setClientSecret] = useState('');
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [coupon, setCoupon] = useState();
@@ -120,5 +120,11 @@ const Page = () => {
     )
   );
 };
+
+const Page = () => (
+  <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">Loading...</div>}>
+    <CheckoutContent />
+  </Suspense>
+);
 
 export default Page;

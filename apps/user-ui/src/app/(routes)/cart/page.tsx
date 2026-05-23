@@ -25,6 +25,7 @@ const CartPage = () => {
   const [couponCode, setCouponCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedAddressId, setSelectedAddressId] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('credit card');
   const [error, setError] = useState('');
   const [storedCouponCode, setStoredCouponCode] = useState('');
 
@@ -114,11 +115,12 @@ const CartPage = () => {
 
   // Calculate subtotal
   const subTotal = cart.reduce((total: number, item: any) => {
+    const basePrice = item.price ?? item.sale_price ?? 0;
     const price =
       item.id === discountedProductId
-        ? (item.sale_price * (100 - discountPercent)) / 100
-        : item.sale_price;
-    return total + item.quantity * price;
+        ? (basePrice * (100 - discountPercent)) / 100
+        : basePrice;
+    return total + (item.quantity ?? 1) * price;
   }, 0);
 
   // Get addresses
@@ -133,9 +135,7 @@ const CartPage = () => {
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddressId) {
       const defaultAddr = addresses.find((addr) => addr.isDefault);
-      if (defaultAddr) {
-        setSelectedAddressId(defaultAddr.id);
-      }
+      setSelectedAddressId((defaultAddr ?? addresses[0]).id);
     }
   }, [addresses, selectedAddressId]);
   return (
@@ -176,11 +176,12 @@ const CartPage = () => {
                 </thead>
                 <tbody>
                   {cart?.map((item: any) => {
+                    const baseItemPrice = item.price ?? item.sale_price ?? 0;
                     const itemPrice =
                       item.id === discountedProductId
-                        ? (item.sale_price * (100 - discountPercent)) / 100
-                        : item.sale_price;
-                    const itemSubtotal = itemPrice * item.quantity;
+                        ? (baseItemPrice * (100 - discountPercent)) / 100
+                        : baseItemPrice;
+                    const itemSubtotal = itemPrice * (item.quantity ?? 1);
 
                     return (
                       <tr
@@ -189,7 +190,7 @@ const CartPage = () => {
                       >
                         <td className="flex items-center gap-4 p-4">
                           <Image
-                            src={item?.images[0]?.url}
+                            src={item?.image || item?.images?.[0]?.url || 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=500'}
                             alt={item.title}
                             width={100}
                             height={100}
@@ -227,7 +228,7 @@ const CartPage = () => {
                           {item?.id === discountedProductId ? (
                             <div className="flex flex-col items-center">
                               <span className="line-through text-gray-500 text-sm">
-                                Rs. {item.sale_price.toFixed(2)}
+                                Rs. {baseItemPrice.toFixed(2)}
                               </span>
                               <span className="text-green-600 font-semibold">
                                 Rs. {itemPrice.toFixed(2)}
@@ -237,7 +238,7 @@ const CartPage = () => {
                               </span>
                             </div>
                           ) : (
-                            <span>Rs. {item?.sale_price.toFixed(2)}</span>
+                            <span>Rs. {baseItemPrice.toFixed(2)}</span>
                           )}
                         </td>
                         <td>
@@ -343,8 +344,8 @@ const CartPage = () => {
                   </h4>
                   <select
                     className="w-full p-2 border border-gray-200 rounded-md focus:outline-none focus:border-blue-500"
-                    value={selectedAddressId}
-                    onChange={(e) => setSelectedAddressId(e.target.value)}
+                    value={selectedPaymentMethod}
+                    onChange={(e) => setSelectedPaymentMethod(e.target.value)}
                   >
                     <option value="credit card">Online Payment</option>
                     <option value="cash_on_delivery">Cash on Delivery</option>

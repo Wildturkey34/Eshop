@@ -1,106 +1,63 @@
 'use client';
 
 import React from 'react';
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-} from '@tanstack/react-table';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts';
-import GeographicalMap from 'apps/seller-ui/src/shared/components/charts/geographicalMap';
-import { SalesChart } from 'apps/seller-ui/src/shared/components/charts/sales.chart';
+import { useQuery } from '@tanstack/react-query';
+import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import dynamic from 'next/dynamic';
+import axiosInstance from 'apps/seller-ui/src/utils/axiosInstance';
 
-// Device data
-const deviceData = [
-  { name: 'Phone', value: 55 },
-  { name: 'Tablet', value: 20 },
-  { name: 'Computer', value: 25 },
-];
+const GeographicalMap = dynamic(
+  () => import('apps/seller-ui/src/shared/components/charts/geographicalMap'),
+  { ssr: false, loading: () => <div className="w-full h-[35vh] bg-slate-800 animate-pulse rounded-lg" /> }
+);
+
+const SalesChart = dynamic(
+  () => import('apps/seller-ui/src/shared/components/charts/sales.chart').then((mod) => mod.SalesChart),
+  { ssr: false, loading: () => <div className="w-full h-[425px] bg-slate-800 animate-pulse rounded-lg" /> }
+);
+
 const COLORS = ['#4ade80', '#facc15', '#60a5fa'];
 
-// Orders data
-const orders = [
-  { id: 'ORD-001', customer: 'John Doe', amount: 'Rs.250', status: 'Paid' },
-  {
-    id: 'ORD-002',
-    customer: 'Jane Smith',
-    amount: 'Rs.180',
-    status: 'Pending',
-  },
-  {
-    id: 'ORD-003',
-    customer: 'Alice Johnson',
-    amount: 'Rs.340',
-    status: 'Paid',
-  },
-  { id: 'ORD-004', customer: 'Bob Lee', amount: 'Rs.90', status: 'Failed' },
-  { id: 'ORD-005', customer: 'Bob Lee', amount: 'Rs.90', status: 'Failed' },
-  { id: 'ORD-006', customer: 'Bob Lee', amount: 'Rs.90', status: 'Failed' },
-];
-
-// Orders table columns
 const columns = [
   {
     accessorKey: 'id',
     header: 'Order ID',
+    cell: ({ getValue }: any) => <span className="font-mono text-xs">{String(getValue()).slice(-8)}</span>,
   },
-  {
-    accessorKey: 'customer',
-    header: 'Customer',
-  },
-  {
-    accessorKey: 'amount',
-    header: 'Amount',
-  },
+  { accessorKey: 'total', header: 'Amount', cell: ({ getValue }: any) => `Rs.${getValue()}` },
   {
     accessorKey: 'status',
     header: 'Status',
     cell: ({ getValue }: any) => {
       const value = getValue();
-      const color =
-        value === 'Paid'
-          ? 'text-green-400'
-          : value === 'Pending'
-          ? 'text-yellow-400'
-          : 'text-red-400';
+      const color = value === 'Paid' ? 'text-green-400' : value === 'Pending' ? 'text-yellow-400' : 'text-red-400';
       return <span className={`font-medium ${color}`}>{value}</span>;
     },
   },
+  {
+    accessorKey: 'createdAt',
+    header: 'Date',
+    cell: ({ getValue }: any) => new Date(getValue()).toLocaleDateString(),
+  },
 ];
 
-const OrdersTable = () => {
-  const table = useReactTable({
-    data: orders,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
+const OrdersTable = ({ data }: { data: any[] }) => {
+  const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="mt-6">
       <h2 className="text-white text-xl font-semibold mb-4">
         Recent Orders
-        <span className="block text-sm text-slate-400 font-normal">
-          A quick snapshot of your latest transactions.
-        </span>
+        <span className="block text-sm text-slate-400 font-normal">A quick snapshot of your latest transactions.</span>
       </h2>
       <div className="!rounded shadow-xl overflow-hidden border border-slate-700">
         <table className="min-w-full text-sm text-white">
           <thead className="bg-slate-900 text-slate-300">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="p-3 text-left">
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+            {table.getHeaderGroups().map((hg) => (
+              <tr key={hg.id}>
+                {hg.headers.map((h) => (
+                  <th key={h.id} className="p-3 text-left">
+                    {flexRender(h.column.columnDef.header, h.getContext())}
                   </th>
                 ))}
               </tr>
@@ -108,10 +65,7 @@ const OrdersTable = () => {
           </thead>
           <tbody className="bg-transparent">
             {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className="border-t border-slate-600 hover:bg-slate-800 transition"
-              >
+              <tr key={row.id} className="border-t border-slate-600 hover:bg-slate-800 transition">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="p-3">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -126,54 +80,64 @@ const OrdersTable = () => {
   );
 };
 
-// Dashboard Layout
 const DashboardPage = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ['seller-dashboard-stats'],
+    queryFn: async () => {
+      const res = await axiosInstance.get('/seller/api/dashboard-stats');
+      return res.data.stats;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const deviceData = data?.deviceData ?? [
+    { name: 'Phone', value: 0 },
+    { name: 'Tablet', value: 0 },
+    { name: 'Computer', value: 0 },
+  ];
+
   return (
     <div className="p-8">
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="bg-slate-800 rounded-xl p-5">
+          <p className="text-slate-400 text-sm">Total Orders</p>
+          {isLoading ? (
+            <div className="h-8 w-20 bg-slate-700 animate-pulse rounded mt-1" />
+          ) : (
+            <p className="text-white text-3xl font-bold mt-1">{data?.totalOrders ?? 0}</p>
+          )}
+        </div>
+        <div className="bg-slate-800 rounded-xl p-5">
+          <p className="text-slate-400 text-sm">Total Revenue</p>
+          {isLoading ? (
+            <div className="h-8 w-28 bg-slate-700 animate-pulse rounded mt-1" />
+          ) : (
+            <p className="text-white text-3xl font-bold mt-1">Rs.{data?.totalRevenue?.toFixed(0) ?? 0}</p>
+          )}
+        </div>
+      </div>
+
       {/* Top Charts */}
       <div className="w-full flex gap-8">
-        {/* Revenue Chart */}
         <div className="w-[65%]">
           <div className="rounded-2xl shadow-xl">
             <h2 className="text-white text-xl font-semibold">
               Revenue
-              <span className="block text-sm text-slate-400 font-normal">
-                Last 6 months performance
-              </span>
+              <span className="block text-sm text-slate-400 font-normal">Last 6 months performance</span>
             </h2>
-            <SalesChart />
+            <SalesChart ordersData={data?.monthlyRevenue} />
           </div>
         </div>
 
-        {/* Device Usage */}
         <div className="w-[35%] rounded-2xl shadow-xl">
           <h2 className="text-white text-xl font-semibold mb-2">
             Device Usage
-            <span className="block text-sm text-slate-400 font-normal">
-              How visitors visit your shop
-            </span>
+            <span className="block text-sm text-slate-400 font-normal">How visitors visit your shop</span>
           </h2>
           <div className="mt-14">
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
-                <defs>
-                  <filter
-                    id="shadow"
-                    x="-10%"
-                    y="-10%"
-                    width="120%"
-                    height="120%"
-                  >
-                    <feDropShadow
-                      dx="0"
-                      dy="0"
-                      stdDeviation="4"
-                      floodColor="#000"
-                      floodOpacity="0.2"
-                    />
-                  </filter>
-                </defs>
-
                 <Pie
                   data={deviceData}
                   dataKey="value"
@@ -186,35 +150,22 @@ const DashboardPage = () => {
                   stroke="#0f172a"
                   strokeWidth={2}
                   isAnimationActive
-                  filter="url(#shadow)"
                 >
-                  {deviceData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
+                  {deviceData.map((_: any, index: number) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1e293b',
-                    border: 'none',
-                    borderRadius: '8px',
-                  }}
+                  contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }}
                   labelStyle={{ color: '#fff' }}
                   itemStyle={{ color: '#fff' }}
                 />
-
-                {/* External Legend */}
                 <Legend
                   layout="horizontal"
                   verticalAlign="bottom"
                   align="center"
                   iconType="circle"
-                  formatter={(value) => (
-                    <span className="text-white text-sm ml-1">{value}</span>
-                  )}
+                  formatter={(value) => <span className="text-white text-sm ml-1">{value}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -224,20 +175,15 @@ const DashboardPage = () => {
 
       {/* Geo Map + Orders */}
       <div className="w-full flex gap-8">
-        {/* Map */}
         <div className="w-[60%]">
           <h2 className="text-white text-xl font-semibold mt-6">
             Visitors Distribution
-            <span className="block text-sm text-slate-400 font-normal">
-              Visual breakdown of global visitors activity.
-            </span>
+            <span className="block text-sm text-slate-400 font-normal">Visual breakdown of global visitors activity.</span>
           </h2>
-          <GeographicalMap />
+          <GeographicalMap countryData={data?.countryData ?? []} />
         </div>
-
-        {/* Orders Table */}
         <div className="w-[40%]">
-          <OrdersTable />
+          <OrdersTable data={data?.recentOrders ?? []} />
         </div>
       </div>
     </div>

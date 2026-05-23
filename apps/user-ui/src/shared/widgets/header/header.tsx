@@ -10,11 +10,13 @@ import axiosInstance from 'apps/user-ui/src/utils/axiosInstance';
 import HeartIcon from 'apps/user-ui/src/assets/svgs/heart-icon';
 import CartIcon from 'apps/user-ui/src/assets/svgs/cart-icon';
 import Image from 'next/image';
+import useLayout from 'apps/user-ui/src/hooks/useLayout';
 
 const Header = () => {
   const { user, isLoading } = useUser();
   const wishlist = useStore((state: any) => state.wishlist);
   const cart = useStore((state: any) => state.cart);
+  const { layout } = useLayout();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -74,6 +76,7 @@ const Header = () => {
           <Link href={'/'}>
             <Image
               src={
+                layout?.logo ||
                 'https://ik.imagekit.io/sjbr5usgh/logo/Blue%20Waves%20Surfing%20Club%20Logo.png?updatedAt=1744371251216'
               }
               width={300}
@@ -126,7 +129,7 @@ const Header = () => {
                   className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
                 >
                   <img
-                    src={item.images?.[0]?.url || '/placeholder.png'}
+                    src={item.image || item.images?.[0]?.url || '/placeholder.png'}
                     alt={item.title}
                     className="w-12 h-12 object-cover rounded"
                   />
@@ -135,7 +138,7 @@ const Header = () => {
                       {item.title}
                     </p>
                     <p className="text-xs text-gray-500">
-                      Rs. {item.sale_price}
+                      Rs. {item.price ?? item.sale_price ?? 0}
                     </p>
                   </div>
                 </Link>

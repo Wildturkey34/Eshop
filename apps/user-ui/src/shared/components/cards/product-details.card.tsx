@@ -85,8 +85,8 @@ const ProductDetailsCard = ({
         <div className="w-full flex flex-col md:flex-row">
           <div className="w-full md:w-1/2 h-full">
             <Image
-              src={data?.images?.[activeImage]?.url}
-              alt={data?.images?.[activeImage].url}
+              src={data?.images?.[activeImage]?.url || 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=500'}
+              alt={data?.title || 'Product image'}
               width={400}
               height={400}
               className="w-full rounded-lg object-contain"

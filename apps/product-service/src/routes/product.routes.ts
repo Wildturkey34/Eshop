@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import {
   createDiscountCodes,
   createProduct,
+  createProductReview,
   deleteDiscountCodes,
   deleteProduct,
   deleteProductImage,
@@ -14,6 +15,7 @@ import {
   getFilteredShops,
   getProductAnalytics,
   getProductDetails,
+  getProductReviews,
   getShopProducts,
   getStripeAccount,
   restoreProduct,
@@ -51,5 +53,7 @@ router.get('/search-products', searchProducts);
 router.get('/top-shops', topShops);
 router.post('/slug-validator', isAuthenticated, isSeller, slugValidator);
 router.get('/get-product-analytics/:productId', getProductAnalytics);
+router.post('/create-review', isAuthenticated, createProductReview);
+router.get('/get-reviews/:productId', getProductReviews);
 
 export default router;

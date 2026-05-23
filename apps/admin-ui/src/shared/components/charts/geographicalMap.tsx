@@ -6,15 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const geoUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
-const countryData = [
-  { name: 'Nepal', users: 120, sellers: 30 },
-  { name: 'India', users: 100, sellers: 20 },
-  { name: 'United Kingdom', users: 85, sellers: 15 },
-  { name: 'Germany', users: 70, sellers: 10 },
-  { name: 'Canada', users: 60, sellers: 5 },
-];
+type CountryEntry = { name: string; users: number; sellers: number };
 
-const getColor = (countryName: string) => {
+const getColor = (countryData: CountryEntry[], countryName: string) => {
   const country = countryData.find((c) => c.name === countryName);
   if (!country) return '#1e293b';
   const total = country.users + country.sellers;
@@ -23,12 +17,8 @@ const getColor = (countryName: string) => {
   return '#1e293b';
 };
 
-const GeographicalMap = () => {
-  const [hovered, setHovered] = useState<{
-    name: string;
-    users: number;
-    sellers: number;
-  } | null>(null);
+const GeographicalMap = ({ countryData = [] }: { countryData?: CountryEntry[] }) => {
+  const [hovered, setHovered] = useState<CountryEntry | null>(null);
 
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [isMounted, setIsMounted] = useState(false);
@@ -70,7 +60,7 @@ const GeographicalMap = () => {
             geographies.map((geo) => {
               const countryName = geo.properties.name;
               const match = countryData.find((c) => c.name === countryName);
-              const baseColor = getColor(countryName);
+              const baseColor = getColor(countryData, countryName);
 
               return (
                 <Geography

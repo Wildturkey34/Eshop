@@ -80,6 +80,14 @@ export const verifyUser = async (
         password: hashedPassword,
       },
     });
+
+    console.log(`[auth-service] New user account created: ${email}`);
+    sendLog({
+      type: 'success',
+      message: `New user account created: ${email}`,
+      source: 'auth-service',
+    });
+
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
@@ -120,7 +128,7 @@ export const loginUser = async (
       { id: user.id, role: 'user' },
       process.env.ACCESS_TOKEN_SECRET as string,
       {
-        expiresIn: '15m',
+        expiresIn: '7d',
       }
     );
 
@@ -135,6 +143,13 @@ export const loginUser = async (
     //store the refresh and access token in an httpOnly secure cookie
     setCookie(res, 'refresh_token', refreshToken);
     setCookie(res, 'access_token', accessToken);
+
+    console.log(`[auth-service] User login successful: ${email}`);
+    sendLog({
+      type: 'success',
+      message: `User login successful: ${email}`,
+      source: 'auth-service',
+    });
 
     res.status(200).json({
       message: 'Login successful',
@@ -203,6 +218,13 @@ export const updateUserPassword = async (
       data: { password: hashedPassword },
     });
 
+    console.log(`[auth-service] Password updated for user ${userId}`);
+    sendLog({
+      type: 'success',
+      message: `User password updated: userId ${userId}`,
+      source: 'auth-service',
+    });
+
     res.status(200).json({ message: 'password updated successfully' });
   } catch (error) {
     next(error);
@@ -257,7 +279,7 @@ export const loginAdmin = async (
       { id: user.id, role: 'admin' },
       process.env.ACCESS_TOKEN_SECRET as string,
       {
-        expiresIn: '15m',
+        expiresIn: '7d',
       }
     );
 
@@ -324,7 +346,7 @@ export const refreshToken = async (
     const newAccessToken = jwt.sign(
       { id: decoded.id, role: decoded.role },
       process.env.ACCESS_TOKEN_SECRET as string,
-      { expiresIn: '15m' }
+      { expiresIn: '7d' }
     );
 
     if (decoded.role === 'user') {
@@ -363,6 +385,11 @@ export const verifyUserForgotPassword = async (
 export const getUser = async (req: any, res: Response, next: NextFunction) => {
   try {
     const user = req.user;
+    await sendLog({
+      type: 'success',
+      message: `User data retrieved ${user?.email}`,
+      source: 'auth-service',
+    });
     res.status(201).json({
       success: true,
       user,
@@ -418,6 +445,13 @@ export const resetUserPassword = async (
     await prisma.users.update({
       where: { email },
       data: { password: hashedPassword },
+    });
+
+    console.log(`[auth-service] Password reset successfully for: ${email}`);
+    sendLog({
+      type: 'success',
+      message: `Password reset successfully for: ${email}`,
+      source: 'auth-service',
     });
 
     res.status(200).json({ message: 'Password reset successfully' });
@@ -491,6 +525,13 @@ export const verifySeller = async (
       },
     });
 
+    console.log(`[auth-service] New seller account created: ${email}`);
+    sendLog({
+      type: 'success',
+      message: `New seller account created: ${email}`,
+      source: 'auth-service',
+    });
+
     res.status(201).json({ seller, message: 'Seller registered successfully' });
   } catch (error) {
     next(error);
@@ -526,6 +567,15 @@ export const createShop = async (
 
     const shop = await prisma.shops.create({
       data: shopData,
+    });
+
+    console.log(
+      `[auth-service] New shop created: "${name}" for seller ${sellerId}`
+    );
+    sendLog({
+      type: 'success',
+      message: `New shop created: "${name}" for seller ${sellerId}`,
+      source: 'auth-service',
     });
 
     res.status(201).json({ success: true, shop });
@@ -581,6 +631,15 @@ export const createStripeConnectLink = async (
       type: 'account_onboarding',
     });
 
+    console.log(
+      `[auth-service] Stripe Connect link created for seller ${sellerId}`
+    );
+    sendLog({
+      type: 'info',
+      message: `Stripe Connect onboarding link generated for seller ${sellerId}`,
+      source: 'auth-service',
+    });
+
     res.json({ url: accountLink.url });
   } catch (error) {
     return next(error);
@@ -613,7 +672,7 @@ export const loginSeller = async (
     const accessToken = jwt.sign(
       { id: seller.id, role: 'seller' },
       process.env.ACCESS_TOKEN_SECRET as string,
-      { expiresIn: '15m' }
+      { expiresIn: '7d' }
     );
 
     const refreshToken = jwt.sign(
@@ -625,6 +684,13 @@ export const loginSeller = async (
     //store refreshToken and accessToken
     setCookie(res, 'seller-refresh-token', refreshToken);
     setCookie(res, 'seller-access-token', accessToken);
+
+    console.log(`[auth-service] Seller login successful: ${email}`);
+    sendLog({
+      type: 'success',
+      message: `Seller login successful: ${email}`,
+      source: 'auth-service',
+    });
 
     res.status(200).json({
       message: 'Login successful',
@@ -788,6 +854,105 @@ export const getUserAddresses = async (
   }
 };
 
+// --- Cart ---
+export const getCart = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const items = await prisma.cartItems.findMany({ where: { userId }, orderBy: { createdAt: 'asc' } });
+    res.status(200).json({ success: true, items });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addToCart = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const { productId, title, price, image, shopId, quantity = 1, selectedOptions } = req.body;
+    if (!productId || !title || price === undefined || !shopId) {
+      throw new ValidationError('Missing required cart item fields');
+    }
+    const item = await prisma.cartItems.upsert({
+      where: { userId_productId: { userId, productId } },
+      update: { quantity: { increment: 1 }, updatedAt: new Date() },
+      create: { userId, productId, title, price, image, shopId, quantity, selectedOptions },
+    });
+    res.status(200).json({ success: true, item });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeFromCart = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const { productId } = req.params;
+    await prisma.cartItems.deleteMany({ where: { userId, productId } });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const syncCart = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const { items } = req.body as { items: { productId: string; title: string; price: number; image: string; shopId: string; quantity: number }[] };
+    if (!Array.isArray(items)) throw new ValidationError('items must be an array');
+    // Upsert all items
+    await Promise.all(
+      items.map((item) =>
+        prisma.cartItems.upsert({
+          where: { userId_productId: { userId, productId: item.productId } },
+          update: { quantity: item.quantity, updatedAt: new Date() },
+          create: { userId, ...item },
+        })
+      )
+    );
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// --- Wishlist ---
+export const getWishlist = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const items = await prisma.wishlistItems.findMany({ where: { userId }, orderBy: { createdAt: 'asc' } });
+    res.status(200).json({ success: true, items });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addToWishlist = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const { productId, title, price, image, shopId } = req.body;
+    if (!productId || !title || price === undefined || !shopId) {
+      throw new ValidationError('Missing required wishlist item fields');
+    }
+    const existing = await prisma.wishlistItems.findUnique({ where: { userId_productId: { userId, productId } } });
+    if (existing) return res.status(200).json({ success: true, item: existing });
+    const item = await prisma.wishlistItems.create({ data: { userId, productId, title, price, image, shopId } });
+    res.status(200).json({ success: true, item });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeFromWishlist = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.id;
+    const { productId } = req.params;
+    await prisma.wishlistItems.deleteMany({ where: { userId, productId } });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // get layout data
 export const getLayoutData = async (
   req: Request,
@@ -797,9 +962,10 @@ export const getLayoutData = async (
   try {
     // Return empty layout data for now
     // This can be extended later to include site configuration, categories, etc.
+    const layout = await prisma.site_config.findFirst();
     res.status(200).json({
       success: true,
-      data: {},
+      layout,
     });
   } catch (error) {
     next(error);

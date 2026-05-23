@@ -1,0 +1,26 @@
+stateDiagram-v2
+    [*] --> Pending: Checkout Initiated
+    
+    state "Pending (Redis Caching)" as Pending
+    Pending --> Authorization_Failed: Stripe Webhook Error/Failure
+    Pending --> Paid_Awaiting_Fulfillment: Stripe Webhook (intent.succeeded)
+    Pending --> Expired: Session TTL (Redis) Timeout
+    
+    Paid_Awaiting_Fulfillment --> Processing: Seller Accepts Order
+    Processing --> Shipped: Fulfilling & Handed to Courier
+    
+    Shipped --> Delivered: Confirmation from Logistics
+    Shipped --> Delivery_Failed: Hub Error / Address Issues
+    
+    Delivered --> Return_Requested: User Claim (within 24hrs)
+    Return_Requested --> Returned_Refunded: Seller Approved & Picked Up
+    
+    Delivered --> [*]: Order Success
+    Authorization_Failed --> [*]
+    Expired --> [*]
+    Returned_Refunded --> [*]
+    Delivery_Failed --> [*]
+    
+    %% Annotations for the Report
+    note right of Pending: Temporary Redis state prevents price manipulation
+    note left of Paid_Awaiting_Fulfillment: Synchronized via Kafka Service

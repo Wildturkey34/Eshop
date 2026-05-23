@@ -31,7 +31,7 @@ const ProvidersWithWebSocket = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { seller, isLoading } = useSeller();
+  const { seller } = useSeller();
 
   // Always wrap with WebSocketProvider, but it will only connect if seller exists
   // This prevents context from being null when seller is not logged in

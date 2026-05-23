@@ -1,0 +1,160 @@
+[
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6b001" },
+    "shopId": { "$oid": "67e5c8f4a1b2c3d4e5f60011" },
+    "totalVisitors": 18,
+    "countryStats": {
+      "Nepal": 8,
+      "Bangladesh": 2,
+      "Australia": 1,
+      "United States": 2,
+      "United Kingdom": 1,
+      "Germany": 1,
+      "India": 1,
+      "Canada": 2
+    },
+    "cityStats": {
+      "Kathmandu": 1,
+      "Pokhara": 1,
+      "Biratnagar": 1,
+      "Surkhet": 1,
+      "Lalitpur": 1,
+      "Bharatpur": 1,
+      "Birgunj": 1,
+      "Hetauda": 1,
+      "Dhaka": 1,
+      "Chittagong": 1,
+      "Melbourne": 1,
+      "New York": 1,
+      "Los Angeles": 1,
+      "London": 1,
+      "Berlin": 1,
+      "Bengaluru": 1,
+      "Toronto": 1,
+      "Vancouver": 1
+    },
+    "deviceStats": {
+      "mobile": 9,
+      "desktop": 7,
+      "tablet": 2
+    },
+    "lastVisitedAt": { "$date": "2026-01-23T10:30:00.000Z" },
+    "createdAt": { "$date": "2025-08-01T08:00:00.000Z" },
+    "updatedAt": { "$date": "2026-01-23T10:30:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6b002" },
+    "shopId": { "$oid": "67e5c8f4a1b2c3d4e5f60012" },
+    "totalVisitors": 13,
+    "countryStats": {
+      "Nepal": 6,
+      "India": 3,
+      "Bangladesh": 1,
+      "United States": 1,
+      "Germany": 1,
+      "France": 1
+    },
+    "cityStats": {
+      "Kathmandu": 1,
+      "Pokhara": 1,
+      "Surkhet": 1,
+      "Lalitpur": 1,
+      "Birgunj": 1,
+      "Butwal": 1,
+      "Delhi": 1,
+      "Chennai": 1,
+      "Chittagong": 1,
+      "New York": 1,
+      "Berlin": 1,
+      "Paris": 1,
+      "Toronto": 1
+    },
+    "deviceStats": {
+      "mobile": 7,
+      "desktop": 5,
+      "tablet": 1
+    },
+    "lastVisitedAt": { "$date": "2026-01-23T10:00:00.000Z" },
+    "createdAt": { "$date": "2025-08-05T08:00:00.000Z" },
+    "updatedAt": { "$date": "2026-01-23T10:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6b003" },
+    "shopId": { "$oid": "67e5c8f4a1b2c3d4e5f60013" },
+    "totalVisitors": 0,
+    "countryStats": {},
+    "cityStats": {},
+    "deviceStats": {
+      "mobile": 0,
+      "desktop": 0,
+      "tablet": 0
+    },
+    "lastVisitedAt": { "$date": "2025-08-07T08:00:00.000Z" },
+    "createdAt": { "$date": "2025-08-07T08:00:00.000Z" },
+    "updatedAt": { "$date": "2025-08-07T08:00:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6b004" },
+    "shopId": { "$oid": "67e5c8f4a1b2c3d4e5f60014" },
+    "totalVisitors": 11,
+    "countryStats": {
+      "Nepal": 5,
+      "India": 3,
+      "Australia": 1,
+      "United States": 1,
+      "France": 1
+    },
+    "cityStats": {
+      "Biratnagar": 1,
+      "Lalitpur": 1,
+      "Birgunj": 1,
+      "Hetauda": 1,
+      "Butwal": 1,
+      "Mumbai": 1,
+      "Chennai": 1,
+      "Sydney": 1,
+      "Los Angeles": 1,
+      "Paris": 1,
+      "Vancouver": 1
+    },
+    "deviceStats": {
+      "mobile": 6,
+      "desktop": 4,
+      "tablet": 1
+    },
+    "lastVisitedAt": { "$date": "2026-01-23T14:30:00.000Z" },
+    "createdAt": { "$date": "2025-08-09T08:00:00.000Z" },
+    "updatedAt": { "$date": "2026-01-23T14:30:00.000Z" }
+  },
+  {
+    "_id": { "$oid": "67e5c8f4a1b2c3d4e5f6b005" },
+    "shopId": { "$oid": "67e5c8f4a1b2c3d4e5f60015" },
+    "totalVisitors": 9,
+    "countryStats": {
+      "Nepal": 4,
+      "India": 2,
+      "Bangladesh": 1,
+      "Australia": 1,
+      "United Kingdom": 1
+    },
+    "cityStats": {
+      "Pokhara": 1,
+      "Surkhet": 1,
+      "Dhangadhi": 1,
+      "Bharatpur": 1,
+      "Delhi": 1,
+      "Chennai": 1,
+      "Dhaka": 1,
+      "Sydney": 1,
+      "London": 1
+    },
+    "deviceStats": {
+      "mobile": 5,
+      "desktop": 3,
+      "tablet": 1
+    },
+    "lastVisitedAt": { "$date": "2026-01-22T10:00:00.000Z" },
+    "createdAt": { "$date": "2025-08-11T08:00:00.000Z" },
+    "updatedAt": { "$date": "2026-01-22T10:00:00.000Z" }
+  }
+]

@@ -6,14 +6,12 @@ import Hero from '../shared/modules/hero';
 import axiosInstance from '../utils/axiosInstance';
 import ProductCard from '../shared/components/cards/product-card';
 import ShopCard from '../shared/components/cards/shop.card';
+import useUser from '../hooks/useUser';
 
 const Page = () => {
-  // Capitalized component name
-  const {
-    data: products = [], // Add default empty array
-    isLoading,
-    isError,
-  } = useQuery({
+  const { user } = useUser();
+
+  const { data: products = [], isLoading, isError } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
       const res = await axiosInstance.get(
@@ -55,15 +53,60 @@ const Page = () => {
     },
     staleTime: 1000 * 60 * 2,
   });
+
+  const { data: recommendations = [], isLoading: recoLoading } = useQuery({
+    queryKey: ['recommendations', user?.id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(
+        '/recommendation/api/recommendations',
+        { withCredentials: true }
+      );
+      return res.data.recommendations;
+    },
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 5,
+  });
+
   return (
     <div className="bg-[#f5f5f5] min-h-screen">
       <Hero />
       <div className="md:w-[80%] w-[90%] mb-20 my-10 m-auto">
+
+        {/* Personalised recommendations — only shown to logged-in users */}
+        {user?.id && (
+          <div className="mb-10">
+            <div className="mb-8">
+              <SectionTitle title="Recommended For You" />
+            </div>
+            {recoLoading && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="h-[350px] bg-gray-300 animate-pulse rounded-xl"
+                  />
+                ))}
+              </div>
+            )}
+            {!recoLoading && recommendations.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
+                {recommendations.map((product: any) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            )}
+            {!recoLoading && recommendations.length === 0 && (
+              <p className="text-center text-gray-500">
+                Browse some products to get personalised recommendations!
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="mb-8">
           <SectionTitle title="Suggested Products" />
         </div>
 
-        {/* Loading skeleton */}
         {isLoading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
             {Array.from({ length: 10 }).map((_, index) => (
@@ -75,14 +118,12 @@ const Page = () => {
           </div>
         )}
 
-        {/* Error state */}
         {isError && (
           <div className="text-center py-10">
             <p className="text-red-500 text-lg">Failed to load products</p>
           </div>
         )}
 
-        {/* Products grid */}
         {!isLoading && !isError && products.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5">
             {products?.map((product: any) => (
@@ -91,7 +132,6 @@ const Page = () => {
           </div>
         )}
 
-        {/* Empty state */}
         {!isLoading && !isError && products.length === 0 && (
           <div className="text-center py-10">
             <p className="text-gray-500 text-lg">No products available yet!</p>

@@ -59,7 +59,7 @@ const OrdersTable = () => {
         accessorKey: 'total',
         header: 'Total',
         cell: ({ row }: any) => (
-          <span className="text-white">${row.original.total.toFixed(2)}</span>
+          <span className="text-white">Rs.{row.original.total.toFixed(2)}</span>
         ),
       },
       {

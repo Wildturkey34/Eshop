@@ -3,6 +3,7 @@ import isAuthenticated from '@packages/middleware/isAuthenticated';
 import express, { Router } from 'express';
 import {
   addNewAdmin,
+  getAdminDashboardStats,
   getAllAdmins,
   getAllCustomizations,
   getAllEvents,
@@ -29,5 +30,6 @@ router.get(
   getAllNotifications
 );
 router.get('/get-user-notifications', isAuthenticated, getUserNotifications);
+router.get('/dashboard-stats', isAuthenticated, isAdmin, getAdminDashboardStats);
 
 export default router;

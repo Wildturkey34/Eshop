@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { sendKafkaEvent } from '../actions/track-user';
+import axiosInstance from '../utils/axiosInstance';
+
 type Product = {
   id: string;
   title: string;
@@ -13,6 +15,8 @@ type Product = {
 type Store = {
   cart: Product[];
   wishlist: Product[];
+  clearStore: () => void;
+  loadFromServer: (cart: Product[], wishlist: Product[]) => void;
   addToCart: (
     product: Product,
     user: any,
@@ -45,6 +49,10 @@ export const useStore = create<Store>()(
       cart: [],
       wishlist: [],
 
+      clearStore: () => set({ cart: [], wishlist: [] }),
+
+      loadFromServer: (cart, wishlist) => set({ cart, wishlist }),
+
       //Add to cart
       addToCart: (product, user, location, deviceInfo) => {
         set((state) => {
@@ -59,11 +67,23 @@ export const useStore = create<Store>()(
             };
           }
           return {
-            cart: [...state.cart, { ...product, quantity: product?.quantity }],
+            cart: [...state.cart, { ...product, quantity: product?.quantity ?? 1 }],
           };
         });
-        //send kafka event
-        if (user?.id && location && deviceInfo) {
+        // Sync to server (fire and forget)
+        if (user?.id) {
+          const syncPrice = product.price ?? (product as any).sale_price ?? 0;
+          const syncImage = product.image ?? (product as any).images?.[0]?.url ?? '';
+          axiosInstance
+            .post('/api/cart', {
+              productId: product.id,
+              title: product.title,
+              price: syncPrice,
+              image: syncImage,
+              shopId: product.shopId,
+              quantity: product.quantity ?? 1,
+            })
+            .catch(() => {});
           sendKafkaEvent({
             userId: user?.id,
             productId: product?.id,
@@ -75,16 +95,17 @@ export const useStore = create<Store>()(
           });
         }
       },
+
       //remove from cart
       removeFromCart: (id, user, location, deviceInfo) => {
-        //find the product before calling set
         const removeProduct = get().cart.find((item) => item.id === id);
 
         set((state) => ({
           cart: state.cart?.filter((item) => item.id !== id),
         }));
-        //send kafka event
-        if (user?.id && location && deviceInfo && removeProduct) {
+        // Sync to server
+        if (user?.id && removeProduct) {
+          axiosInstance.delete(`/api/cart/${id}`).catch(() => {});
           sendKafkaEvent({
             userId: user?.id,
             productId: removeProduct?.id,
@@ -104,8 +125,19 @@ export const useStore = create<Store>()(
             return state;
           return { wishlist: [...state.wishlist, product] };
         });
-        //send kafka event
-        if (user?.id && location && deviceInfo) {
+        // Sync to server
+        if (user?.id) {
+          const syncPrice = product.price ?? (product as any).sale_price ?? 0;
+          const syncImage = product.image ?? (product as any).images?.[0]?.url ?? '';
+          axiosInstance
+            .post('/api/wishlist', {
+              productId: product.id,
+              title: product.title,
+              price: syncPrice,
+              image: syncImage,
+              shopId: product.shopId,
+            })
+            .catch(() => {});
           sendKafkaEvent({
             userId: user?.id,
             productId: product?.id,
@@ -117,15 +149,16 @@ export const useStore = create<Store>()(
           });
         }
       },
+
       removeFromWishlist: (id, user, location, deviceInfo) => {
-        //find the product before calling `set`
         const removeProduct = get().wishlist.find((item) => item.id === id);
 
         set((state) => ({
           wishlist: state.wishlist.filter((item) => item.id !== id),
         }));
-        //send kafka event
-        if (user?.id && location && deviceInfo && removeProduct) {
+        // Sync to server
+        if (user?.id && removeProduct) {
+          axiosInstance.delete(`/api/wishlist/${id}`).catch(() => {});
           sendKafkaEvent({
             userId: user?.id,
             productId: removeProduct?.id,

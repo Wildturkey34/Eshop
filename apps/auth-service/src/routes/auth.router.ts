@@ -1,14 +1,18 @@
 import express, { Router } from 'express';
 import {
   addUserAddress,
+  addToCart,
+  addToWishlist,
   createShop,
   createStripeConnectLink,
   deleteUserAddress,
   getAdmin,
+  getCart,
   getLayoutData,
   getSeller,
   getUser,
   getUserAddresses,
+  getWishlist,
   loginAdmin,
   loginSeller,
   loginUser,
@@ -17,7 +21,10 @@ import {
   logOutUser,
   refreshToken,
   registerSeller,
+  removeFromCart,
+  removeFromWishlist,
   resetUserPassword,
+  syncCart,
   updateUserPassword,
   userForgotPassword,
   userRegisteration,
@@ -53,4 +60,16 @@ router.get('/shipping-addresses', isAuthenticated, getUserAddresses);
 router.post('/add-address', isAuthenticated, addUserAddress);
 router.delete('/delete-address/:addressId', isAuthenticated, deleteUserAddress);
 router.get('/get-layouts', getLayoutData);
+
+// Cart
+router.get('/cart', isAuthenticated, getCart);
+router.post('/cart', isAuthenticated, addToCart);
+router.delete('/cart/:productId', isAuthenticated, removeFromCart);
+router.post('/cart/sync', isAuthenticated, syncCart);
+
+// Wishlist
+router.get('/wishlist', isAuthenticated, getWishlist);
+router.post('/wishlist', isAuthenticated, addToWishlist);
+router.delete('/wishlist/:productId', isAuthenticated, removeFromWishlist);
+
 export default router;

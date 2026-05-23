@@ -44,7 +44,7 @@ const Page = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="md:w-[450px] pb-8 bg-slate-800 rounded-md shadow">
-        <form className="p-5" onSubmit={handleSubmit(onSubmit)}>
+        <form className="p-5" method="post" action="#" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="text-3xl pb-3 pt-4 font-semibold text-center text-white font-Poppins">
             Welcome Admin
           </h1>

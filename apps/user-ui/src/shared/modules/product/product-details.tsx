@@ -9,7 +9,7 @@ import {
   WalletMinimal,
 } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactImageMagnify from 'react-image-magnify';
 import Ratings from '../../components/ratings';
 import Link from 'next/link';
@@ -20,14 +20,135 @@ import useLocationTracking from 'apps/user-ui/src/hooks/useLocationTracking';
 import useDeviceTracking from 'apps/user-ui/src/hooks/useDeviceTracking';
 import ProductCard from '../../components/cards/product-card';
 import axiosInstance from 'apps/user-ui/src/utils/axiosInstance';
+import { sendKafkaEvent } from '../../../actions/track-user';
+import { isProtected } from 'apps/user-ui/src/utils/protected';
+import { useRouter } from 'next/navigation';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
+// ── Review Section ────────────────────────────────────────────────────────────
+const ReviewSection = ({ productId, user, reviewData, isLoading }: { productId: string; user: any; reviewData: any; isLoading: boolean }) => {
+  const queryClient = useQueryClient();
+  const [rating, setRating] = useState(0);
+  const [hovered, setHovered] = useState(0);
+  const [review, setReview] = useState('');
+
+  const data = reviewData;
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      await axiosInstance.post('/product/api/create-review', { productId, rating, review }, { withCredentials: true });
+    },
+    onSuccess: () => {
+      toast.success('Review submitted!');
+      setRating(0);
+      setReview('');
+      queryClient.invalidateQueries({ queryKey: ['reviews', productId] });
+    },
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || 'Failed to submit review');
+    },
+  });
+
+  return (
+    <div className="w-[90%] lg:w-[80%] mx-auto">
+      <div className="bg-white min-h-[50vh] h-full mt-5 p-5" id="reviews">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold">
+            Ratings & Reviews
+            {data?.totalReviews > 0 && (
+              <span className="ml-2 text-sm text-gray-500 font-normal">
+                ({data.totalReviews} {data.totalReviews === 1 ? 'review' : 'reviews'} · avg {Number(data.averageRating).toFixed(1)} ★)
+              </span>
+            )}
+          </h3>
+        </div>
+
+        {/* Write a review */}
+        {user?.id ? (
+          <div className="mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50">
+            <p className="font-medium text-sm mb-2">Write a review</p>
+            <div className="flex gap-1 mb-3">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onMouseEnter={() => setHovered(star)}
+                  onMouseLeave={() => setHovered(0)}
+                  onClick={() => setRating(star)}
+                  className="text-2xl transition"
+                >
+                  <span className={(hovered || rating) >= star ? 'text-yellow-400' : 'text-gray-300'}>★</span>
+                </button>
+              ))}
+            </div>
+            <textarea
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              placeholder="Share your thoughts (optional)..."
+              className="w-full border border-gray-300 rounded-md p-2 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-orange-400"
+              rows={3}
+            />
+            <button
+              onClick={() => {
+                if (!rating) { toast.error('Please select a rating'); return; }
+                mutation.mutate();
+              }}
+              disabled={mutation.isPending}
+              className="mt-2 px-5 py-2 bg-[#ff5722] text-white text-sm rounded-lg hover:bg-[#e64a19] transition disabled:opacity-60"
+            >
+              {mutation.isPending ? 'Submitting...' : 'Submit Review'}
+            </button>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500 mb-4">
+            <Link href="/login" className="text-blue-500 underline">Login</Link> to write a review.
+          </p>
+        )}
+
+        {/* Reviews list */}
+        {isLoading && <p className="text-gray-400 text-sm">Loading reviews...</p>}
+        {!isLoading && data?.reviews?.length === 0 && (
+          <p className="text-center pt-8 text-gray-400">No reviews yet. Be the first!</p>
+        )}
+        {!isLoading && data?.reviews?.length > 0 && (
+          <div className="space-y-4">
+            {data.reviews.map((r: any) => (
+              <div key={r.id} className="border-b border-gray-100 pb-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-medium text-sm">{r.user?.name}</span>
+                  <span className="text-yellow-400 text-sm">{'★'.repeat(Math.round(r.rating))}{'☆'.repeat(5 - Math.round(r.rating))}</span>
+                  <span className="text-gray-400 text-xs ml-auto">{new Date(r.createdAt).toLocaleDateString()}</span>
+                </div>
+                {r.review && <p className="text-gray-600 text-sm">{r.review}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const ProductDetails = ({ productDetails }: { productDetails: any }) => {
   const { user } = useUser();
   const location = useLocationTracking();
   const deviceInfo = useDeviceTracking();
+  const router = useRouter();
+  const hasTrackedView = useRef(false);
 
+  const { data: reviewData, isLoading: reviewsLoading } = useQuery({
+    queryKey: ['reviews', productDetails?.id],
+    queryFn: async () => {
+      const res = await axiosInstance.get(`/product/api/get-reviews/${productDetails?.id}`);
+      return res.data;
+    },
+    enabled: !!productDetails?.id,
+  });
+
+  const [isChatLoading, setIsChatLoading] = useState(false);
   const [currentImage, setCurrentImage] = useState(
-    productDetails?.images[0]?.url
+    productDetails?.images[0]?.url || 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=500'
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSelected, setIsSelected] = useState(
@@ -37,7 +158,6 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
     productDetails?.sizes?.[0] || ''
   );
   const [quantity, setQuantity] = useState(1);
-  const [priceRange, setPriceRange] = useState([0, 10000]); // Use default values
   const [recommendedProducts, setRecommendedProducts] = useState([]);
 
   const addToCart = useStore((state: any) => state.addToCart);
@@ -70,36 +190,77 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
       100
   );
 
-  const fetchFilteredProducts = async () => {
+  useEffect(() => {
+    if (!user?.id) return;
+    axiosInstance
+      .get('/recommendation/api/recommendations', { withCredentials: true })
+      .then((res) => setRecommendedProducts(res.data.recommendations ?? []))
+      .catch(() => {});
+  }, [user?.id]);
+
+  // Track product view (only once per product)
+  useEffect(() => {
+    if (user?.id && productDetails?.id && !hasTrackedView.current) {
+      console.log('📊 Tracking product view:', {
+        userId: user.id,
+        productId: productDetails.id,
+        hasLocation: !!location,
+        hasDevice: !!deviceInfo,
+      });
+
+      hasTrackedView.current = true;
+
+      sendKafkaEvent({
+        userId: user.id,
+        productId: productDetails.id,
+        shopId: productDetails.shopId,
+        action: 'product_view',
+        country: location?.country || 'Unknown',
+        city: location?.city || 'Unknown',
+        device: deviceInfo || 'Unknown Device',
+      });
+    }
+  }, [user?.id, productDetails?.id, location, deviceInfo]);
+
+  const handleChat = async () => {
+    if (isChatLoading) {
+      return;
+    }
+
+    if (!user?.id) {
+      router.push('/login');
+      return;
+    }
+
+    // Validate sellerId exists before making the request
+    if (!productDetails?.Shop?.sellerId) {
+      console.error('Seller ID is missing from product data:', {
+        hasShop: !!productDetails?.Shop,
+        shopData: productDetails?.Shop,
+      });
+      alert('Unable to start chat: Seller information is missing');
+      return;
+    }
+
+    setIsChatLoading(true);
+
     try {
-      const query = new URLSearchParams();
-
-      query.set('priceRange', priceRange.join(','));
-      query.set('page', '1');
-      query.set('limit', '5');
-
-      const res = await axiosInstance.get(
-        `/product/api/get-filtered-products?${query.toString()}`
+      const res = await axiosInstance.post(
+        '/chatting/api/create-user-conversationGroup',
+        { sellerId: productDetails?.Shop?.sellerId },
+        isProtected
       );
-      setRecommendedProducts(res.data.products);
-    } catch (error) {
-      console.error('Failed to fetch filtered products', error);
+      router.push(`/inbox?conversationId=${res.data.conversation.id}`);
+    } catch (error: any) {
+      console.error('Chat creation error:', error);
+      alert(
+        error?.response?.data?.message ||
+          'Failed to start chat. Please try again.'
+      );
+    } finally {
+      setIsChatLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (productDetails?.sale_price) {
-      // Set the actual price range after product loads
-      setPriceRange([
-        Math.max(0, productDetails.sale_price - 500), // Lower bound
-        productDetails.sale_price + 500, // Upper bound
-      ]);
-    }
-  }, [productDetails]);
-
-  useEffect(() => {
-    fetchFilteredProducts();
-  }, [priceRange]);
   return (
     <div className="w-full bg-[#f5f5f5] py-5">
       <div className="w-[90%] bg-white lg:w-[80%] mx-auto pt-6 grid grid-cols-1 lg:grid-cols-[28%_44%_28%] gap-6 overflow-hidden">
@@ -186,9 +347,9 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
           <h1 className="text-xl mb-2  font-medium">{productDetails?.title}</h1>
           <div className="w-full flex items-center justify-between">
             <div className="flex gap-2 mt-2 text-yellow-500">
-              <Ratings rating={productDetails?.rating} />
+              <Ratings rating={reviewData?.averageRating ?? productDetails?.ratings ?? 0} />
               <Link href={'#reviews'} className="text-blue-500 hover:underline">
-                (0 reviews)
+                ({reviewData?.totalReviews ?? 0} {reviewData?.totalReviews === 1 ? 'review' : 'reviews'})
               </Link>
             </div>
             <div>
@@ -384,14 +545,13 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                     {productDetails?.Shop?.name}
                   </span>
                 </div>
-                <Link
-                  href={'#'}
-                  //  onClick={() => handleChat()}
+                <button
+                  onClick={handleChat}
                   className="text-blue-500 text-sm flex items-center gap-1"
                 >
                   <MessageSquareText />
                   Chat Now
-                </Link>
+                </button>
               </div>
               {/* Seller performance stats */}
 
@@ -458,14 +618,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
         </div>
       </div>
 
-      <div className="w-[90%] lg:w-[80%] mx-auto">
-        <div className="bg-white min-h-[50vh] h-full mt-5 p-5">
-          <h3 className="text-lg font-semibold">
-            Ratings & Reviews of {productDetails?.title}
-          </h3>
-          <p className="text-center pt-14">No Reviews available yet!</p>
-        </div>
-      </div>
+      <ReviewSection productId={productDetails?.id} user={user} reviewData={reviewData} isLoading={reviewsLoading} />
 
       <div className="w-[90%] lg:w-[80%] mx-auto">
         <div className="w-full h-full my-5 p-5">

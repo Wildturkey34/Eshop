@@ -1,0 +1,57 @@
+flowchart TD
+    subgraph USER["🖥️ User Browser (user-ui)"]
+        A1["User views a product"]
+        A2["User adds to cart"]
+        A3["User adds to wishlist"]
+        A4["User purchases"]
+    end
+
+    subgraph PRODUCER["📤 Producer — track-user.ts (Server Action)"]
+        B["sendKafkaEvent()\n\nBuilds a message:\n• userId\n• productId\n• shopId\n• action\n• country / city / device"]
+    end
+
+    subgraph KAFKA["📬 Kafka Broker"]
+        C[/"Topic: users-events"\]
+        C1["Message 1: product_view"]
+        C2["Message 2: add_to_cart"]
+        C3["Message 3: add_to_wishlist"]
+        C4["Message 4: purchase"]
+        C --> C1
+        C --> C2
+        C --> C3
+        C --> C4
+    end
+
+    subgraph CONSUMER["📥 Consumer — kafka-service"]
+        D["Listening to\n'users-events' topic\n24/7"]
+        E{"Is action valid?\nview / cart /\nwishlist / purchase"}
+        F["Batch events\nfor 3 seconds"]
+        G["Write to MongoDB\nuserAnalytics collection\n\nAppend action to user history\nUpdate location + device"]
+    end
+
+    subgraph RECOMMENDATION["🤖 Recommendation Service"]
+        H["Cron job runs\nevery 6 hours"]
+        I["Reads userAnalytics\nfrom MongoDB"]
+        J["Computes similarities\nContent-Based + Collaborative"]
+        K[("Redis Cache\nStores top-20\nsimilar products\nper product")]
+        L["Serves recommendations\nto homepage &\nproduct page"]
+    end
+
+    A1 & A2 & A3 & A4 -->|"User action triggers"| B
+    B -->|"Sends message\n(fire and forget)"| C
+    C -->|"Messages queue up"| D
+    D --> E
+    E -->|"Valid"| F
+    E -->|"Invalid — skip"| D
+    F --> G
+    G -->|"Data builds up\nover time"| I
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+
+    style USER fill:#1e3a5f,color:#fff,stroke:#4a9eff
+    style PRODUCER fill:#1a4731,color:#fff,stroke:#4ade80
+    style KAFKA fill:#4a2c00,color:#fff,stroke:#fb923c
+    style CONSUMER fill:#3b1f4e,color:#fff,stroke:#c084fc
+    style RECOMMENDATION fill:#1f3a3a,color:#fff,stroke:#2dd4bf

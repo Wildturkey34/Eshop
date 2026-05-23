@@ -1,0 +1,78 @@
+flowchart TD
+    %% Compact multi-flow Activity Diagram for E-shop Microservices
+    
+    node_start([Start]) --> node_auth{Login / Register?}
+    
+    %% Authentication & Role Branching
+    node_auth -- Customer --> node_user_flow[Enter User UI]
+    node_auth -- Seller --> node_seller_flow[Enter Seller UI]
+    node_auth -- Admin --> node_admin_init[Enter Admin UI]
+
+    %% --- USER FLOW ---
+    node_user_flow --> node_browse[Browse Products]
+    node_browse --> node_view_event{View Details?}
+    node_view_event -- Yes --> node_kafka_view[[Kafka: VIEW Event]]
+    node_view_event -- No --> node_cart_check{Add to Cart?}
+    
+    node_kafka_view --> node_cart_check
+    node_cart_check -- Yes --> node_kafka_cart[[Kafka: CART Event]]
+    node_kafka_cart --> node_checkout[Stripe Checkout]
+    node_cart_check -- No --> node_browse
+    
+    node_checkout --> node_pay_check{Pay Success?}
+    node_pay_check -- Yes --> node_kafka_buy[[Kafka: BUY Event]]
+    node_pay_check -- No --> node_checkout
+    
+    %% --- SELLER FLOW ---
+    node_seller_flow --> node_shop_check{Shop Setup?}
+    node_shop_check -- No --> node_stripe[Stripe Onboarding]
+    node_shop_check -- Yes --> node_prod_mgmt[Manage Products]
+    
+    node_stripe --> node_prod_mgmt
+    node_prod_mgmt --> node_add_prod{Product Mod?}
+    node_add_prod -- Yes --> node_kafka_prod[[Kafka: CHANGE Event]]
+    node_add_prod -- No --> node_fulfill[Process Orders]
+    node_kafka_prod --> node_fulfill
+
+    %% --- ADMIN FLOW ---
+    node_admin_init --> node_admin_act{Admin Action}
+    node_admin_act --> node_orders[Order History]
+    node_admin_act --> node_users[Manage Users/Sellers]
+    node_admin_act --> node_logs[View Site Logs]
+    node_admin_act --> node_mod[Approve Products]
+    
+    node_orders --> node_admin_done
+    node_users --> node_admin_done
+    node_logs --> node_admin_done
+    node_mod --> node_admin_done([End])
+
+    %% --- COMPACT KAFKA HUB ---
+    subgraph K_Hub [Kafka Hub]
+        direction LR
+        kv[[VIEW]]
+        kc[[CART]]
+        kb[[BUY]]
+        kp[[CHANGE]]
+        
+        kv & kc & kb & kp -.-> batch[3s Processing]
+    end
+
+    %% Event Connections
+    node_kafka_view -.-> kv
+    node_kafka_cart -.-> kc
+    node_kafka_buy -.-> kb
+    node_kafka_prod -.-> kp
+    
+    batch --> node_db[(Analytics DB)]
+    node_db -.-> node_admin_act
+
+    %% Final Connections
+    node_kafka_buy --> node_user_done([End])
+    node_fulfill --> node_seller_done([End])
+
+    %% Styling for compact fit
+    style K_Hub fill:#fcf,stroke:#333,stroke-dasharray: 5 5
+    style kv fill:#fff,stroke:#333
+    style kc fill:#fff,stroke:#333
+    style kb fill:#fff,stroke:#333
+    style kp fill:#fff,stroke:#333

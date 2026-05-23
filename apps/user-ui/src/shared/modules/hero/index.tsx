@@ -2,9 +2,11 @@
 import { MoveRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import useLayout from 'apps/user-ui/src/hooks/useLayout';
 
 const Hero = () => {
   const router = useRouter();
+  const { layout } = useLayout();
   return (
     <div className="bg-[#115061] min-h-[85vh] flex flex-col justify-center w-full py-8">
       <div className="md:w-[80%] w-[90%] m-auto md:flex items-center gap-8">
@@ -30,7 +32,10 @@ const Hero = () => {
         </div>
         <div className="md:w-1/2 flex justify-center">
           <Image
-            src="https://ik.imagekit.io/fz0xzwtey/products/slider-img-1.png?updatedAt=1744358118885"
+            src={
+              layout?.banner ||
+              'https://ik.imagekit.io/fz0xzwtey/products/slider-img-1.png?updatedAt=1744358118885'
+            }
             alt="Smart watch collection"
             width={450}
             height={450}

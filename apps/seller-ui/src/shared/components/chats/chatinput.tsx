@@ -104,13 +104,15 @@ const ChatInput = ({
         value={message}
         disabled={isUploading}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder={isUploading ? 'Uploading image...' : 'Type your message...'}
+        placeholder={
+          isUploading ? 'Uploading image...' : 'Type your message...'
+        }
         className="flex-1 px-4 py-2 text-sm border outline-none border-gray-200 rounded-md disabled:bg-gray-50"
       />
       {/* Send Button */}
       <button
         type="submit"
-        disabled={isUploading || (!message.trim())}
+        disabled={isUploading || !message.trim()}
         className="bg-blue-600 hover:bg-blue-700 transition text-white p-2 rounded-md disabled:opacity-50"
       >
         <Send className="w-4 h-4" />

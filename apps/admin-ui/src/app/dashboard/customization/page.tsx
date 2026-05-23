@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import BreadCrumbs from 'apps/admin-ui/src/shared/components/breadcrumbs';
 import axiosInstance from 'apps/admin-ui/src/utils/axiosInstance';
