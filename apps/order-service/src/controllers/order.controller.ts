@@ -19,21 +19,15 @@ export const createPaymentIntent = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { amount, sellerStripeAccountId, sessionId } = req.body;
+  const { amount, sessionId } = req.body;
 
   const customerAmount = Math.round(amount * 100);
-  const platformFee = Math.floor(customerAmount * 0.1);
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: customerAmount,
       currency: 'npr',
       payment_method_types: ['card'],
-      application_fee_amount: platformFee,
-      on_behalf_of: sellerStripeAccountId,
-      transfer_data: {
-        destination: sellerStripeAccountId,
-      },
       metadata: {
         sessionId,
         userId: req.user.id,

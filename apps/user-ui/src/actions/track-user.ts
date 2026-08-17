@@ -2,7 +2,7 @@
 import { kafka } from '../../../../packages/utils/kafka';
 
 const producer = kafka.producer();
-let isConnected = false;
+let connectPromise: Promise<void> | null = null;
 
 export async function sendKafkaEvent(eventData: {
   userId?: string;
@@ -13,14 +13,15 @@ export async function sendKafkaEvent(eventData: {
   country?: string;
   city?: string;
 }) {
-  try {
-    // Connect once and reuse
-    if (!isConnected) {
-      await producer.connect();
-      isConnected = true;
-      console.log('🔌 Kafka producer connected');
-    }
+  if (!connectPromise) {
+    connectPromise = producer.connect().catch((err) => {
+      console.error('🔌 Kafka connection failed:', err);
+      connectPromise = null;
+    });
+  }
 
+  try {
+    await connectPromise;
     console.log(
       '📤 Sending Kafka event:',
       eventData.action,
@@ -36,7 +37,5 @@ export async function sendKafkaEvent(eventData: {
     console.log('✅ Event sent successfully');
   } catch (error) {
     console.error('❌ Failed to send Kafka event:', error);
-    isConnected = false; // Reset on error so it reconnects next time
   }
-  // DON'T disconnect here - keep connection alive
 }

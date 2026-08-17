@@ -4,7 +4,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { errorMiddleware } from '@packages/error-handler';
 import router from './routes/order.routes';
-import bodyParser from 'body-parser';
 import { createOrder } from './controllers/order.controller';
 
 const app = express();
@@ -19,7 +18,7 @@ app.use(
 
 app.post(
   '/api/create-order',
-  bodyParser.raw({ type: 'application/json' }),
+  express.raw({ type: 'application/json' }),
   (req, res, next) => {
     (req as any).rawBody = req.body;
     next();

@@ -30,7 +30,26 @@ const Page = () => {
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<any>({
+    defaultValues: {
+      title: '',
+      slug: '',
+      category: '',
+      subCategory: '',
+      short_description: '',
+      detailed_description: '',
+      tags: '',
+      brand: '',
+      regular_price: 0,
+      sale_price: 0,
+      stock: 0,
+      video_url: '',
+      warranty: '',
+      cash_on_delivery: '',
+      starting_date: '',
+      ending_date: '',
+    },
+  });
   const [images, setImages] = useState<(UploadedImage | null)[]>([null]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -91,6 +110,7 @@ const Page = () => {
         return res.data;
       } catch (error) {
         console.log(error);
+        return { categories: [], subCategories: {} };
       }
     },
     staleTime: 1000 * 60 * 5,

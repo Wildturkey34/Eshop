@@ -67,13 +67,17 @@ export const useStore = create<Store>()(
             };
           }
           return {
-            cart: [...state.cart, { ...product, quantity: product?.quantity ?? 1 }],
+            cart: [
+              ...state.cart,
+              { ...product, quantity: product?.quantity ?? 1 },
+            ],
           };
         });
         // Sync to server (fire and forget)
         if (user?.id) {
           const syncPrice = product.price ?? (product as any).sale_price ?? 0;
-          const syncImage = product.image ?? (product as any).images?.[0]?.url ?? '';
+          const syncImage =
+            product.image ?? (product as any).images?.[0]?.url ?? '';
           axiosInstance
             .post('/api/cart', {
               productId: product.id,
@@ -128,7 +132,8 @@ export const useStore = create<Store>()(
         // Sync to server
         if (user?.id) {
           const syncPrice = product.price ?? (product as any).sale_price ?? 0;
-          const syncImage = product.image ?? (product as any).images?.[0]?.url ?? '';
+          const syncImage =
+            product.image ?? (product as any).images?.[0]?.url ?? '';
           axiosInstance
             .post('/api/wishlist', {
               productId: product.id,

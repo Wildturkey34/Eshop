@@ -4,3 +4,15 @@ packages:
   - 'apps'
   - 'packages/*'
   - 'packages/libs/*'
+allowBuilds:
+  '@parcel/watcher': false
+  '@prisma/client': false
+  '@prisma/engines': false
+  '@scarf/scarf': false
+  '@swc/core': false
+  core-js-pure: false
+  esbuild: false
+  nx: false
+  prisma: false
+  sharp: false
+  unrs-resolver: false
